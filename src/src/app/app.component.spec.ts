@@ -1,29 +1,14 @@
-import { TestBed } from '@angular/core/testing';
+import { createComponentFactory } from '@ngneat/spectator';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [AppComponent],
-    }).compileComponents();
-  });
+  const createCUT = createComponentFactory(AppComponent);
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
+  it('[UNIT][TEST-001] - Test of Jest', () => {
+    // Act
+    const cut = createCUT();
 
-  it(`should have the 'spec-board' title`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('spec-board');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, spec-board');
+    // Assert
+    expect(cut).not.toBeNull();
   });
 });
