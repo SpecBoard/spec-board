@@ -9,21 +9,21 @@
       "request": "launch",
       "command": "npm install",
       "type": "node-terminal",
-      "cwd": "${workspaceFolder}\\src"
+      "cwd": "${workspaceFolder}\\src\\client"
     },
     {
       "name": "Start the Application",
       "type": "node-terminal",
       "request": "launch",
       "command": "npm run start",
-      "cwd": "${workspaceFolder}\\src"
+      "cwd": "${workspaceFolder}\\src\\client"
     },
     {
       "name": "Run All Tests",
       "type": "node-terminal",
       "request": "launch",
       "command": "npm run test",
-      "cwd": "${workspaceFolder}\\src"
+      "cwd": "${workspaceFolder}\\src\\client"
     }
   ]
 }
