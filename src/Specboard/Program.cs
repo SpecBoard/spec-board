@@ -1,4 +1,6 @@
+using LightInject;
 using Serilog;
+using Specboard.Wireup;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +9,11 @@ builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Confi
 builder.Host.UseLightInject();
 
 builder.Services.AddControllers();
+
+builder.Services.ConfigureServices(builder.Configuration);
+builder.Host.ConfigureContainer<IServiceRegistry>(registry => registry.ConfigureContainer());
+
+builder.ConfigureSTrain();
 
 var app = builder.Build();
 
