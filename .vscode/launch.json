@@ -19,11 +19,18 @@
       "cwd": "${workspaceFolder}\\src\\client"
     },
     {
-      "name": "Run All Tests",
+      "name": "Run Unit Tests",
       "type": "node-terminal",
       "request": "launch",
       "command": "npm run test",
       "cwd": "${workspaceFolder}\\src\\client"
+    }
+    {
+      "name": "Run E2E Tests",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "npm run test",
+      "cwd": "${workspaceFolder}\\specs"
     }
   ]
 }

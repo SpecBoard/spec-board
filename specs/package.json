@@ -1,0 +1,14 @@
+{
+  "devDependencies": {
+    "@cucumber/cucumber": "^11.2.0",
+    "@playwright/test": "^1.51.1",
+    "@types/node": "^22.13.11",
+    "typescript": "^5.8.2"
+  },
+  "dependencies": {
+    "tsyringe": "^4.8.0"
+  },
+  "scripts": {
+    "test": "tsc && cucumber-js --require dist/steps --require dist/features --require dist/support"
+  }
+}
