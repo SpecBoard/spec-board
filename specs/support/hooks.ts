@@ -1,10 +1,11 @@
 import { After, Before } from '@cucumber/cucumber';
-import { Browser, chromium, Page } from '@playwright/test';
+import { Browser, chromium } from '@playwright/test';
 import { container } from 'tsyringe';
 import { TestContext } from './test-context';
 import { InjectionTokens } from './injection-tokens';
+import { SpecStoreDriver } from '../drivers/spec-store.driver';
 
-Before(async () => {
+Before('@specboard', async () => {
   const testContext = container.resolve(TestContext);
 
   const browser = await chromium.launch();
@@ -17,13 +18,14 @@ Before(async () => {
   container.registerInstance(InjectionTokens.Browser, browser);
   container.registerInstance(InjectionTokens.Context, context);
   container.registerInstance(InjectionTokens.Page, page);
-});
 
-Before(async () => {
-  const page = container.resolve<Page>(InjectionTokens.Page);
   await page.goto('');
 });
 
-After(async () => {
+Before('@specstore', async () => {
+  await container.resolve(SpecStoreDriver).healthCheckAsync();
+});
+
+After('@specboard', async () => {
   await container.resolve<Browser>(InjectionTokens.Browser).close();
 });
