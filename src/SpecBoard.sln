@@ -1,9 +1,33 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35913.81 d17.13
+VisualStudioVersion = 17.13.35913.81
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecBoard.Api", "SpecBoard.Api\SpecBoard.Api.csproj", "{948B9A9E-0329-4ABE-8686-1F37212660CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecBoard.Application", "SpecBoard.Application\SpecBoard.Application.csproj", "{630F0ADA-636D-42D2-B97D-D18E448FD04D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Specboard", "Specboard\Specboard.csproj", "{BA92BFC6-A970-4FA5-8A17-DC27170C5AB8}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{948B9A9E-0329-4ABE-8686-1F37212660CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{948B9A9E-0329-4ABE-8686-1F37212660CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{948B9A9E-0329-4ABE-8686-1F37212660CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{948B9A9E-0329-4ABE-8686-1F37212660CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{630F0ADA-636D-42D2-B97D-D18E448FD04D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{630F0ADA-636D-42D2-B97D-D18E448FD04D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{630F0ADA-636D-42D2-B97D-D18E448FD04D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{630F0ADA-636D-42D2-B97D-D18E448FD04D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA92BFC6-A970-4FA5-8A17-DC27170C5AB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA92BFC6-A970-4FA5-8A17-DC27170C5AB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA92BFC6-A970-4FA5-8A17-DC27170C5AB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA92BFC6-A970-4FA5-8A17-DC27170C5AB8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
