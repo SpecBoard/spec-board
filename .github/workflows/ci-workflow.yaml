@@ -1,0 +1,65 @@
+name: CI Workflow
+run-name: 'PR-#${{ github.event.pull_request.number }}: ${{ github.event.pull_request.title }}'
+
+on:
+  pull_request:
+    branches: [develop]
+
+jobs:
+  restore-dependencies:
+    runs-on: ubuntu-latest
+    outputs:
+      cache-key: ${{ steps }}
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Generate Chache Key
+        id: cache-key
+        run: echo "CACHE_KEY=${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}" >> "$GITHUB_OUTPUT"
+        working-directory: src/client
+
+      - name: Restore Dependencies
+        uses: mihben/actions-repository/.github/actions/node/restore-dependencies@main
+        id: cache
+        with:
+          working-directory: src/client
+          cache_enabled: true
+          cache_key: ${{ steps.cache-key.outputs.CACHE_KEY }}
+
+  build:
+    needs: [restore-dependencies]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Build
+        uses: mihben/actions-repository/.github/actions/node/build@main
+        with:
+          cache_enabled: true
+          cache_key: ${{ needs.restore-dependencies.outputs.cache-key }}
+
+          project: spec-board
+
+          artict_publish: false
+
+          working-directory: src/client
+
+  test:
+    needs: [restore-dependencies, build]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Test
+        uses: mihben/actions-repository/.github/actions/node/test@main
+        with:
+          working-directory: src/woring-directory
+
+          cache_enabled: true
+          cache_key: ${{ needs.restore-dependencies.outputs.cache-key }}
