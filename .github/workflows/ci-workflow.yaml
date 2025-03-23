@@ -59,7 +59,7 @@ jobs:
       - name: Test
         uses: mihben/actions-repository/.github/actions/node/test@main
         with:
-          working-directory: src/woring-directory
+          working-directory: src/client
 
           cache_enabled: true
           cache_key: ${{ needs.restore-dependencies.outputs.cache-key }}
