@@ -1,1 +1,24 @@
-<router-outlet />
+<div class="app__container">
+  <section class="app__header">
+    <ng-icon class="app__logo" size="xl" hlm name="lucideImageOff"></ng-icon>
+    <div></div>
+    <div class="app__profile">
+      <ng-icon
+        class="app__profile--image"
+        hlm
+        name="lucideCircleUser"
+      ></ng-icon>
+      <p>SpecBoard User</p>
+    </div>
+  </section>
+  <router-outlet />
+  <section class="app__footer">
+    <p>Projects: 4</p>
+    <brn-separator
+      decorative
+      hlmSeparator
+      orientation="vertical"
+    ></brn-separator>
+    <p>Last Report: 2025-10-15 15:14</p>
+  </section>
+</div>

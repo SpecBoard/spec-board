@@ -112,3 +112,29 @@
     @apply border-border;
   }
 }
+
+@layer default {
+  * {
+    @apply font-mono;
+
+    font-size: small;
+  }
+
+  html,
+  body {
+    @apply w-full h-full;
+
+    background: none;
+  }
+
+  section {
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+
+    border-color: rgba(0, 0, 0, 0.2);
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 4px;
+
+    background-color: rgba(0, 0, 0, 0.01);
+  }
+}
