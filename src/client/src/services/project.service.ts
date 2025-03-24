@@ -11,7 +11,7 @@ export class ProjectService {
 
   public async getAsync(): Promise<Project[]> {
     return lastValueFrom<Project[]>(
-      this.client.get<Project[]>(`${this.url}project`)
+      this.client.get<Project[]>(`${this.url}api/project`)
     );
   }
 }

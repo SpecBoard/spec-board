@@ -1,3 +1,14 @@
-<p>
-  home.page works!
-</p>
+<div class="content">
+  <section class="filters">
+    <hlm-switch class="pass"></hlm-switch>
+    <hlm-switch class="fail"></hlm-switch>
+  </section>
+
+  <div class="projects">
+    @for (project of (projectStore.Value$ | async); track project.key) {
+    <section class="project">
+      <p data-testid="txtProject">{{ project.key }}</p>
+    </section>
+    }
+  </div>
+</div>

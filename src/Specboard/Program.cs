@@ -17,6 +17,8 @@ builder.ConfigureSTrain();
 
 var app = builder.Build();
 
+app.UseCors(builder => builder.AllowAnyOrigin());
+
 // Configure the HTTP request pipeline.
 
 app.UseAuthorization();

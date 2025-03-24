@@ -1,7 +1,9 @@
 div.app__container {
-  @apply grid grid-rows-[7rem_1fr_auto] w-full h-full;
+  @apply grid grid-rows-[7rem_min-content_1fr_auto] w-full h-full;
 
   padding: 4px;
+
+  row-gap: 2px;
 }
 
 section.app__header {
