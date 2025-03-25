@@ -8,7 +8,7 @@ import { HlmSwitchComponent } from '@spartan-ng/ui-switch-helm';
   templateUrl: './home.page.component.html',
   imports: [CommonModule, HlmSwitchComponent],
   providers: [ProjectStore],
-  styleUrls: ['./home.page.component.css'],
+  styleUrls: ['./home.page.component.scss'],
 })
 export class HomePageComponent implements OnInit {
   constructor(public readonly projectStore: ProjectStore) {}

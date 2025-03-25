@@ -29,6 +29,8 @@
   --ring: 224 71.4% 4.1%;
   --radius: 0.5rem;
   color-scheme: light;
+
+  --pass: #72b370;
 }
 
 .dark {
@@ -138,5 +140,9 @@
     background-color: rgba(0, 0, 0, 0.01);
 
     padding: 4px;
+  }
+
+  .pass[data-state=checked] {
+    background-color: var(--pass);
   }
 }

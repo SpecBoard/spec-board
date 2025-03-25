@@ -84,6 +84,7 @@
     "schematicCollections": ["angular-eslint"],
     "cache": {
       "enabled": false
-    }
+    },
+    "analytics": false
   }
 }
