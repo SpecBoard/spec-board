@@ -17,7 +17,12 @@ builder.ConfigureSTrain();
 
 var app = builder.Build();
 
-app.UseCors(builder => builder.AllowAnyOrigin());
+app.UseCors(builder =>
+{
+	builder.AllowAnyOrigin();
+	builder.AllowAnyHeader();
+	builder.AllowAnyMethod();
+});
 
 // Configure the HTTP request pipeline.
 

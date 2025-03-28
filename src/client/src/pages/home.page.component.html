@@ -8,9 +8,7 @@
 
   <div class="projects">
     @for (project of (projectStore.Value$ | async); track project.key) {
-    <section class="project">
-      <p data-testid="txtProject">{{ project.key }}</p>
-    </section>
+    <project-overview [project]="project"></project-overview>
     }
   </div>
 </div>

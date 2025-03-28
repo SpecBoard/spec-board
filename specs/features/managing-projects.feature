@@ -3,11 +3,15 @@ Projects are highest group of the reports. Projects are created automatically wh
 
 Rule: CP - Creating Projects
 
+    @specstore
+    @specboard
     Scenario: [E2E][CP/MP-001]: Creating new project automatically
-        Given Uploading report for 'Bold Ideas' project
-        Then 'Bold Ideas' project should be created
+        Given Uploading report for 'bold_ideas' project
+        Then 'bold_ideas' project should be created
 
+    @specstore
+    @specboard
     Scenario: [E2E][CP/MP-002]: Do not create new project
-        Given 'Bold Ideas' project has report
-        When Uploading report for 'Bold Ideas' project
-        Then 'Bold Idieas' project should not be created again
+        Given 'crave' project has report
+        When Uploading report for 'crave' project
+        Then 'crave' project should not be created again

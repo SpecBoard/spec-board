@@ -10,6 +10,6 @@
     "tsyringe": "^4.8.0"
   },
   "scripts": {
-    "test": "tsc && cucumber-js --require dist/steps --require dist/features --require dist/support"
+    "test": "tsc && cucumber-js --require dist/steps --require dist/support"
   }
 }

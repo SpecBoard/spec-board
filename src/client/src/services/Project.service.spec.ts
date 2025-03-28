@@ -1,7 +1,7 @@
 import { createHttpFactory } from '@ngneat/spectator';
 import { ProjectService } from './project.service';
 import { MockService } from 'ng-mocks';
-import { ProjectFaker } from '../__test_utility__/project-faker';
+import { ProjectFaker } from '../modules/project/__test_utils__/project-faker';
 import { of } from 'rxjs';
 
 describe('ProjectService', () => {

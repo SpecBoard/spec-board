@@ -1,6 +1,6 @@
 import { createServiceFactory } from '@ngneat/spectator/jest';
 import { ProjectStore } from './project.store.service';
-import { ProjectFaker } from '../__test_utility__/project-faker';
+import { ProjectFaker } from '../modules/project/__test_utils__/project-faker';
 import { ProjectService } from '../services/project.service';
 
 describe('ProjectStore', () => {

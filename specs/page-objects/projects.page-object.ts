@@ -1,11 +1,16 @@
 import { Page } from '@playwright/test';
-import { injectable } from 'tsyringe';
+import { inject, injectable } from 'tsyringe';
+import { InjectionTokens } from '../support/injection-tokens';
 
 @injectable()
 export class ProjectsPageObject {
   public get Projects(): Promise<string[]> {
-    return this.page.getByTestId('snpProject').allTextContents();
+    return this.page.getByTestId('spnProject').allTextContents();
   }
 
-  constructor(private readonly page: Page) {}
+  constructor(@inject(InjectionTokens.Page) private readonly page: Page) {}
+
+  public async refreshAsync(): Promise<void> {
+    await this.page.reload();
+  }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Project } from '../models/project';
+import { Project } from '../modules/project/models/project';
 import { HttpClient } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
 

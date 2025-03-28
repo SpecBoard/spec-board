@@ -30,7 +30,8 @@
   --radius: 0.5rem;
   color-scheme: light;
 
-  --pass: #72b370;
+  --pass: #74cf8c;
+  --fail: #f9423a;
 }
 
 .dark {
@@ -142,7 +143,16 @@
     padding: 4px;
   }
 
-  .pass[data-state=checked] {
+  .pass[data-state="checked"] {
     background-color: var(--pass);
+  }
+
+  .fail[data-state="checked"] {
+    background-color: var(--fail);
+  }
+
+  .title {
+    font-weight: bold;
+    font-size: 1.6em;
   }
 }
