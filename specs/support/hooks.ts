@@ -8,7 +8,10 @@ import { SpecStoreDriver } from '../drivers/spec-store.driver';
 Before('@specboard', async () => {
   const testContext = container.resolve(TestContext);
 
-  const browser = await chromium.launch();
+  const browser = await chromium.launch({
+    headless: false,
+    slowMo: 1000,
+  });
   const context = await browser.newContext({
     baseURL: 'http://localhost:4200/',
     extraHTTPHeaders: { 'run-id': testContext.runId },

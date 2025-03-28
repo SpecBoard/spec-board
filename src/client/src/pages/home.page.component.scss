@@ -1,0 +1,22 @@
+div.content {
+  @apply h-full;
+  @apply grid grid-cols-[auto_5fr];
+
+  column-gap: 4px;
+}
+
+div.projects {
+  @apply h-full w-full;
+  @apply grid auto-rows-min;
+
+  row-gap: 4px;
+}
+
+section.project {
+}
+
+section.filters {
+  @apply grid auto-rows-min grid-flow-row;
+
+  row-gap: 4px;
+}

@@ -1,0 +1,27 @@
+section.content {
+  @apply grid grid-cols-[min-content_1fr];
+  @apply w-full;
+
+  column-gap: 4px;
+}
+
+div.data {
+  @apply grid grid-rows-[min-content_min-content];
+  @apply w-full;
+}
+
+div.avatar {
+  background-color: #008ad880;
+  padding: 8px;
+  width: 4rem;
+  height: 4rem;
+
+  text-align: center;
+  align-content: center;
+
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: white;
+
+  border-radius: 4px;
+}
