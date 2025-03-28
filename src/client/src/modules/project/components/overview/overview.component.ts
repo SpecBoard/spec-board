@@ -1,4 +1,4 @@
-import { Component, Input, signal, Signal } from '@angular/core';
+import { Component, Input, signal } from '@angular/core';
 import { Project } from '../../models/project';
 
 @Component({

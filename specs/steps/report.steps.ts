@@ -1,4 +1,4 @@
-import { Given, Then, When } from '@cucumber/cucumber';
+import { Given, When } from '@cucumber/cucumber';
 import { container } from 'tsyringe';
 import { SpecStoreDriver } from '../drivers/spec-store.driver';
 

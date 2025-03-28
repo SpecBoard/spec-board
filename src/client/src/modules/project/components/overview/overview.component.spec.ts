@@ -21,7 +21,7 @@ describe('OverviewComponent', () => {
 
     // Assert
     cut.detectChanges();
-    expect(cut.query(byTestId('divAvatar'))!.textContent).toEqual(
+    expect(cut.query(byTestId('divAvatar'))?.textContent).toEqual(
       getAvatar(project.key)
     );
   });

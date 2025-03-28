@@ -15,7 +15,7 @@ describe('ProjectService', () => {
     const sut = createSUT();
     const projects = [ProjectFaker.random(), ProjectFaker.random()];
 
-    sut.httpClient.get = jest.fn(() => of(projects)) as any;
+    sut.httpClient.get = jest.fn(() => of(projects)) as never;
 
     // Act
     const result = await sut.service.getAsync();
