@@ -15,8 +15,7 @@ describe('HomePage', () => {
     // Arrange
     const cut = createCUT();
 
-    const mock = cut.inject(ProjectStore);
-    const spy = jest.spyOn(mock, 'loadAsync');
+    const spy = jest.spyOn(cut.component.projectStore, 'loadAsync');
 
     // Act
     cut.detectChanges();
