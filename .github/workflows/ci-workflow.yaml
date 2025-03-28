@@ -17,8 +17,7 @@ jobs:
 
       - name: Generate Chache Key
         id: cache-key
-        run: echo "CACHE_KEY=${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}" >> "$GITHUB_OUTPUT"
-        working-directory: src/client
+        run: echo "CACHE_KEY=${{ runner.os }}-node-modules-${{ hashFiles('src/client/package-lock.json') }}" >> "$GITHUB_OUTPUT"
 
       - name: Restore Dependencies
         uses: mihben/actions-repository/.github/actions/node/restore-dependencies@main
