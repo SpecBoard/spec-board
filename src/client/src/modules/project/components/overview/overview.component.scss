@@ -2,19 +2,32 @@ section.content {
   @apply grid grid-cols-[min-content_1fr];
   @apply w-full;
 
-  column-gap: 4px;
+  column-gap: 8px;
+
+  border-left-width: 8px;
+}
+
+section.pass {
+  border-left-color: var(--pass);
+}
+
+section.fail {
+  border-left-color: var(--fail);
 }
 
 div.data {
   @apply grid grid-rows-[min-content_min-content];
   @apply w-full;
+
+  row-gap: 8px;
 }
 
 div.avatar {
+  @apply h-full;
+
   background-color: #008ad880;
   padding: 8px;
-  width: 4rem;
-  height: 4rem;
+  aspect-ratio: 1/1;
 
   text-align: center;
   align-content: center;
@@ -24,4 +37,16 @@ div.avatar {
   color: white;
 
   border-radius: 4px;
+}
+
+div.basic-data {
+  @apply grid grid-cols-[min-content_min-content];
+
+  column-gap: 8px;
+}
+
+div.value {
+  @apply grid grid-cols-[min-content_min-content];
+
+  column-gap: 4px;
 }

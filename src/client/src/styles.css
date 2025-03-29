@@ -43,3 +43,7 @@ input[type="checkbox"].fail[data-appearance="primary"] {
   font-weight: bold;
   font-size: 1.6em;
 }
+
+.label {
+  font-weight: 900;
+}

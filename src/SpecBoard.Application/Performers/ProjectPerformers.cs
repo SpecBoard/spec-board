@@ -31,7 +31,7 @@ namespace SpecBoard.Application.Performers
 	{
 		public static IEnumerable<SpecBoard.GetProjectsQuery.Result> Map(this IEnumerable<SpecStore.GetProjectsQuery.Result> projects)
 		{
-			return projects.Select(p => new GetProjectsQuery.Result { Key = p.Key });
+			return projects.Select(p => new GetProjectsQuery.Result { Key = p.Key, Version = p.Version });
 		}
 	}
 }
