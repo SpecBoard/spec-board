@@ -11,8 +11,10 @@ export class SpecStoreDriver {
       throw Error(response.statusText);
   }
 
-  public async uploadReportAsync(project: string) {
-    const response = await axios.post(`${this.url}api/project/${project}`);
+  public async uploadReportAsync(project: string, version: string) {
+    const response = await axios.post(`${this.url}api/project/${project}`, {
+      version: version,
+    });
     if (response.status != axios.HttpStatusCode.Ok)
       throw Error(response.statusText);
   }

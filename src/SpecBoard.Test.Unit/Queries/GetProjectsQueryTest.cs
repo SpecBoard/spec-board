@@ -31,7 +31,15 @@ namespace SpecBoard.Test.Unit.Queries
 		{
 			foreach (var project in projects)
 			{
-				yield return p => Assert.Equal(project.Key, p.Key);
+				yield return p =>
+				{
+					Assert.Equal(project.Key, p.Key);
+					Assert.Equal(project.Version, p.Version);
+					Assert.Equal(project.LastReport, p.LastReport);
+					Assert.Equal(project.PassCount, p.PassCount);
+					Assert.Equal(project.FailCount, p.FailCount);
+					Assert.Equal(project.SkippedCount, p.SkippedCount);
+				};
 			}
 		}
 	}
