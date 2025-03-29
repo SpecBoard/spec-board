@@ -25,9 +25,9 @@
     </div>
 
     <div class="badges">
-      <tui-badge class="pass" [class.not-relevant]="project.passCount === 0" size="xl"><tui-icon icon="@tui.check" />{{ project.passCount }}</tui-badge>
-      <tui-badge class="fail" [class.not-relevant]="project.failCount === 0" size="xl"><tui-icon icon="@tui.x" />{{ project.failCount }}</tui-badge>
-      <tui-badge class="skipped" [class.not-relevant]="project.skippedCount === 0" size="xl"><tui-icon icon="@tui.skip-forward" class="skipped" />{{ project.skippedCount }}</tui-badge>
+      <tui-badge data-testid="pdgPass" class="pass" [class.not-relevant]="project.passCount === 0" size="xl"><tui-icon icon="@tui.check" />{{ project.passCount }}</tui-badge>
+      <tui-badge data-testid="pdgFail" class="fail" [class.not-relevant]="project.failCount === 0" size="xl"><tui-icon icon="@tui.x" />{{ project.failCount }}</tui-badge>
+      <tui-badge data-testid="pdgSkipped" class="skipped" [class.not-relevant]="project.skippedCount === 0" size="xl"><tui-icon icon="@tui.skip-forward" class="skipped" />{{ project.skippedCount }}</tui-badge>
     </div>
   </div>
 
