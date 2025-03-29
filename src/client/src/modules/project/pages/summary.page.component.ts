@@ -3,10 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { ProjectSummary } from '../models/project-summary';
 import { ProjectService } from '../services/project.service';
 import { DatePipe } from '@angular/common';
+import { SummaryComponent } from '../components/summary/summary.component';
 
 @Component({
   selector: 'project.summary.page',
-  imports: [DatePipe],
+  imports: [DatePipe, SummaryComponent],
   templateUrl: './summary.page.component.html',
   styleUrl: './summary.page.component.scss',
 })

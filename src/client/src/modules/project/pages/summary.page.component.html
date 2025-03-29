@@ -13,9 +13,16 @@
       </div>
     </div>
   </div>
+
   <div class="status-bar" [attr.data-pass]="summary()?.passCount" [attr.data-fail]="summary()?.failCount" [attr.data-skipped]="summary()?.skippedCount">
     <div class="status-bar--fail"></div>
     <div class="status-bar--pass"></div>
     <div class="status-bar--skipped"></div>
+  </div>
+
+  <div class="summary">
+    @if (summary()) {
+    <project-summary [summary]="summary()!"></project-summary>
+    }
   </div>
 </section>

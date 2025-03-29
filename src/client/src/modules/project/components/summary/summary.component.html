@@ -1,1 +1,37 @@
-<p>summary works!</p>
+<section class="content">
+  <div class="header">
+    <div
+      class="status"
+      [class.status--pass]="summary.failCount === 0 && summary.skippedCount === 0"
+      [class.status--fail]="summary.failCount > 0"
+      [class.status--skipped]="summary.failCount === 0 && summary.skippedCount > 0"
+    >
+      @if (summary.failCount > 0) {
+      <tui-icon [icon]="Icons.fail"></tui-icon>
+      } @if (summary.skippedCount > 0 && summary.failCount === 0) {
+      <tui-icon [icon]="Icons.skipped"></tui-icon>
+      } @if (summary.failCount === 0 && summary.skippedCount === 0) {
+      <tui-icon [icon]="Icons.pass"></tui-icon>
+      }
+    </div>
+    <div class="divider"></div>
+    <div class="data">
+      <div class="first-row">
+        <div class="duration">
+          <tui-icon icon="@tui.clock"></tui-icon>
+          <span>24m 58s</span>
+        </div>
+        <tui-icon icon="@tui.external-link"></tui-icon>
+      </div>
+      <div class="summary">
+        <span class="status">@if (summary.failCount > 0) { Failed } @else if (summary.skippedCount > 0) { Skipped } @else { Passed }</span>
+        <span class="summary">{{ summary.failCount }} scenario(s) were failed out of {{ summary.passCount + summary.failCount + summary.skippedCount }} scenario(s)</span>
+      </div>
+    </div>
+  </div>
+  <div class="details">
+    @if (summary.failCount > 0) {
+    <span>Feature 1 > Rule 1 > Scenario 1</span>
+    }
+  </div>
+</section>
