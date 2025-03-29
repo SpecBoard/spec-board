@@ -1,5 +1,5 @@
 import { Component, Input, signal } from '@angular/core';
-import { Project } from '../../models/project';
+import { ProjectOverview } from '../../models/project-overview';
 import { DatePipe } from '@angular/common';
 import { TuiBadge } from '@taiga-ui/kit';
 import { TuiIcon, TuiIconPipe } from '@taiga-ui/core';
@@ -13,13 +13,13 @@ import { Router } from '@angular/router';
   styleUrl: './overview.component.scss',
 })
 export class OverviewComponent {
-  private _project!: Project;
+  private _project!: ProjectOverview;
 
-  public get project(): Project {
+  public get project(): ProjectOverview {
     return this._project;
   }
   @Input({ required: true })
-  public set project(value: Project) {
+  public set project(value: ProjectOverview) {
     this._project = value;
     this.avatar.set(this.getAvatar(this._project.key));
   }
@@ -37,8 +37,7 @@ export class OverviewComponent {
   }
 
   public open() {
-    console.log('Navigate');
-    this.router.navigate([`project/${this._project.key}`]);
+    this.router.navigate(['/project', this.project.key]);
   }
 
   public Icons = Icons;

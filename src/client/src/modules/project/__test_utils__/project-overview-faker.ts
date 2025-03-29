@@ -1,8 +1,8 @@
-import { Project } from '../models/project';
+import { ProjectOverview } from '../models/project-overview';
 import { faker } from '@faker-js/faker';
 
-export class ProjectFaker {
-  public static random(): Project {
+export class ProjectOverviewFaker {
+  public static random(): ProjectOverview {
     return {
       key: `${faker.string.alpha()}_${faker.string.alpha()}`,
       version: faker.system.semver(),
@@ -13,7 +13,7 @@ export class ProjectFaker {
     };
   }
 
-  public static pass(): Project {
+  public static pass(): ProjectOverview {
     const result = this.random();
     result.failCount = 0;
     result.skippedCount = 0;
@@ -21,7 +21,7 @@ export class ProjectFaker {
     return result;
   }
 
-  public static fail(): Project {
+  public static fail(): ProjectOverview {
     const result = this.random();
     result.passCount = 0;
     result.skippedCount = 0;
@@ -29,7 +29,7 @@ export class ProjectFaker {
     return result;
   }
 
-  public static skipped(): Project {
+  public static skipped(): ProjectOverview {
     const result = this.random();
     result.passCount = 0;
     result.failCount = 0;
@@ -37,21 +37,21 @@ export class ProjectFaker {
     return result;
   }
 
-  public static notPass(): Project {
+  public static notPass(): ProjectOverview {
     const result = this.random();
     result.passCount = 0;
 
     return result;
   }
 
-  public static notFail(): Project {
+  public static notFail(): ProjectOverview {
     const result = this.random();
     result.failCount = 0;
 
     return result;
   }
 
-  public static notSkipped(): Project {
+  public static notSkipped(): ProjectOverview {
     const result = this.random();
     result.skippedCount = 0;
 

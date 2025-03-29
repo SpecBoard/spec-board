@@ -1,0 +1,21 @@
+<section class="content">
+  <div class="header">
+    <div class="avatar">{{ avatar() }}</div>
+    <span class="title">{{ summary()?.key }}</span>
+    <div class="details">
+      <div class="value">
+        <span class="label">Version:</span>
+        <span data-testid="spnVersion">{{ summary()?.version }}</span>
+      </div>
+      <div class="value">
+        <span class="label">Last Report:</span>
+        <span data-testid="spnLastReport">{{ summary()?.lastReport | date : "short" }}</span>
+      </div>
+    </div>
+  </div>
+  <div class="status-bar" [attr.data-pass]="summary()?.passCount" [attr.data-fail]="summary()?.failCount" [attr.data-skipped]="summary()?.skippedCount">
+    <div class="status-bar--fail"></div>
+    <div class="status-bar--pass"></div>
+    <div class="status-bar--skipped"></div>
+  </div>
+</section>

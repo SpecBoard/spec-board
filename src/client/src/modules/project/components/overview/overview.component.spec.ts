@@ -1,6 +1,7 @@
 import { byTestId, createComponentFactory } from '@ngneat/spectator/jest';
 import { OverviewComponent } from './overview.component';
-import { ProjectFaker } from '../../__test_utils__/project-faker';
+import { ProjectOverviewFaker } from '../../__test_utils__/project-overview-faker';
+import { Router } from '@angular/router';
 
 describe('OverviewComponent', () => {
   const createCUT = createComponentFactory({
@@ -10,7 +11,7 @@ describe('OverviewComponent', () => {
 
   it('[UNIT][POC-001]: Calculate Avatar', () => {
     // Arrange
-    const project = ProjectFaker.random();
+    const project = ProjectOverviewFaker.random();
 
     // Act
     const cut = createCUT({
@@ -26,7 +27,7 @@ describe('OverviewComponent', () => {
 
   it('[UNIT][POC-002]: Show Status as Pass', () => {
     // Arrange
-    const project = ProjectFaker.pass();
+    const project = ProjectOverviewFaker.pass();
 
     // Act
     const cut = createCUT({
@@ -41,7 +42,7 @@ describe('OverviewComponent', () => {
 
   it('[UNIT][POC-003]: Show Status as Fail', () => {
     // Arrange
-    const project = ProjectFaker.fail();
+    const project = ProjectOverviewFaker.fail();
 
     // Act
     const cut = createCUT({
@@ -56,7 +57,7 @@ describe('OverviewComponent', () => {
 
   it('[UNIT][POC-004]: Show Status as Skipped', () => {
     // Arrange
-    const project = ProjectFaker.skipped();
+    const project = ProjectOverviewFaker.skipped();
 
     // Act
     const cut = createCUT({
@@ -71,7 +72,7 @@ describe('OverviewComponent', () => {
 
   it('[UNIT][POC-005]: Show Pass is Not Relevant', () => {
     // Arrange
-    const project = ProjectFaker.notPass();
+    const project = ProjectOverviewFaker.notPass();
 
     // Act
     const cut = createCUT({
@@ -86,7 +87,7 @@ describe('OverviewComponent', () => {
 
   it('[UNIT][POC-006]: Show Fail is Not Relevant', () => {
     // Arrange
-    const project = ProjectFaker.notFail();
+    const project = ProjectOverviewFaker.notFail();
 
     // Act
     const cut = createCUT({
@@ -101,7 +102,7 @@ describe('OverviewComponent', () => {
 
   it('[UNIT][POC-006]: Show Fail is Not Relevant', () => {
     // Arrange
-    const project = ProjectFaker.notSkipped();
+    const project = ProjectOverviewFaker.notSkipped();
 
     // Act
     const cut = createCUT({
@@ -112,6 +113,24 @@ describe('OverviewComponent', () => {
 
     // Assert
     expect(cut.query(byTestId('pdgSkipped'))?.classList).toContain('not-relevant');
+  });
+
+  it('[UNIT][POC-007]: Open Project Summary', () => {
+    // Arrange
+    const project = ProjectOverviewFaker.random();
+    const cut = createCUT({
+      props: {
+        project: project,
+      },
+    });
+
+    const spy = jest.spyOn(cut.inject(Router), 'navigate');
+
+    // Act
+    cut.click(byTestId('divOpen'));
+
+    // Assert
+    expect(spy).toHaveBeenCalledWith(['/project', project.key]);
   });
 
   const getAvatar = (key: string): string => {

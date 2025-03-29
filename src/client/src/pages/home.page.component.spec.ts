@@ -1,7 +1,7 @@
 import { createComponentFactory, mockProvider } from '@ngneat/spectator/jest';
 import { HomePageComponent } from './home.page.component';
 import { ProjectStore } from '../stores/project.store.service';
-import { ProjectService } from '../services/project.service';
+import { ProjectService } from '../modules/project/services/project.service';
 
 describe('HomePage', () => {
   const createCUT = createComponentFactory({
