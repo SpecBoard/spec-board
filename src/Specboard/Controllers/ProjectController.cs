@@ -20,5 +20,11 @@ namespace Specboard.Controllers
 		{
 			return await _receiver.ReceiveQueryAsync(new SpecBoard.GetProjectsQuery(), cancellationToken);
 		}
+
+		[HttpGet("{key}/summary")]
+		public async Task<IActionResult> GetProjectSummaryAsync(string key, CancellationToken cancellationToken)
+		{
+			return await _receiver.ReceiveQueryAsync(new SpecBoard.GetProjectSummaryQuery { Key = key }, cancellationToken);
+		}
 	}
 }

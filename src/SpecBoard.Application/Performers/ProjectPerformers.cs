@@ -3,7 +3,8 @@ using STrain;
 
 namespace SpecBoard.Application.Performers
 {
-	public class ProjectPerformers : IQueryPerformer<SpecBoard.GetProjectsQuery, IEnumerable<SpecBoard.GetProjectsQuery.Result>>
+	public class ProjectPerformers : IQueryPerformer<SpecBoard.GetProjectsQuery, IEnumerable<SpecBoard.GetProjectsQuery.Result>>,
+		IQueryPerformer<SpecBoard.GetProjectSummaryQuery, SpecBoard.GetProjectSummaryQuery.Result>
 	{
 		private readonly IRequestSender _sender;
 
@@ -24,6 +25,25 @@ namespace SpecBoard.Application.Performers
 			_logger.LogTrace("Projects: {@Projects}", projects);
 
 			return projects!.Map();
+		}
+
+		public async Task<GetProjectSummaryQuery.Result> PerformAsync(GetProjectSummaryQuery query, CancellationToken cancellationToken)
+		{
+			_logger.LogDebug("Querying summary of {Project} project", query.Key);
+			var summary = await _sender.GetAsync<SpecStore.GetProjectSummaryQuery, SpecStore.GetProjectSummaryQuery.Result>(new SpecStore.GetProjectSummaryQuery(query.Key), cancellationToken);
+
+			_logger.LogInformation("Queried summary of {Project} project", summary!.Key);
+			_logger.LogTrace("Summary: {@Summary}", summary);
+
+			return new GetProjectSummaryQuery.Result
+			{
+				Key = summary.Key,
+				Version = summary.Version,
+				LastReport = summary.LastReport,
+				PassCount = summary.PassCount,
+				FailCount = summary.FailCount,
+				SkippedCount = summary.SkippedCount
+			};
 		}
 	}
 
