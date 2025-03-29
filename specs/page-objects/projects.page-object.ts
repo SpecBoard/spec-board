@@ -13,4 +13,12 @@ export class ProjectsPageObject {
   public async refreshAsync(): Promise<void> {
     await this.page.reload();
   }
+
+  public async versionOf(project: string) {
+    const overviews = await this.page.getByTestId("secOverview").all();
+    for (const overview of overviews) {
+      const title = await overview.getByTestId('spnProject').textContent();
+      if (title === project) return await overview.getByTestId('spnVersion').textContent();
+    }
+  }
 }

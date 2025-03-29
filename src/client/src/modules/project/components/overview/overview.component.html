@@ -1,11 +1,11 @@
-<section class="project content pass">
+<section data-testid="secOverview" class="project content pass">
   <div class="avatar" data-testid="divAvatar">{{ avatar() }}</div>
   <div class="data">
     <p class="title" data-testid="spnProject">{{ project.key }}</p>
     <div class="basic-data">
       <div class="value">
         <span class="label">Version:</span>
-        <span>{{ project.version }}</span>
+        <span data-testid="spnVersion">{{ project.version }}</span>
       </div>
     </div>
   </div>

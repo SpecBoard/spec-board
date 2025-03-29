@@ -3,22 +3,10 @@ import { container } from 'tsyringe';
 import { ProjectsPageObject } from '../page-objects/projects.page-object';
 import { expect } from '@playwright/test';
 
-Then('{string} project should be created', async (project: string) => {
+Then('{string} project should exists with version {string}', async (project: string, version: string) => {
   const pageObject = container.resolve(ProjectsPageObject);
   await pageObject.refreshAsync();
 
   expect(await pageObject.Projects).toContain(project);
+  expect(await pageObject.versionOf(project)).toEqual(version);
 });
-
-Then(
-  '{string} project should not be created again',
-  async (project: string) => {
-    const pageObject = container.resolve(ProjectsPageObject);
-    await pageObject.refreshAsync();
-
-    expect(await pageObject.Projects).toContain(project);
-    expect(
-      (await pageObject.Projects).filter((p) => p === project)
-    ).toHaveLength(1);
-  }
-);
