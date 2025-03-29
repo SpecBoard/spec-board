@@ -35,6 +35,10 @@ namespace SpecBoard.Test.Unit.Queries
 				{
 					Assert.Equal(project.Key, p.Key);
 					Assert.Equal(project.Version, p.Version);
+					Assert.Equal(project.LastReport, p.LastReport);
+					Assert.Equal(project.PassCount, p.PassCount);
+					Assert.Equal(project.FailCount, p.FailCount);
+					Assert.Equal(project.SkippedCount, p.SkippedCount);
 				};
 			}
 		}

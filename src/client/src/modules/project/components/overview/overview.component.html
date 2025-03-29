@@ -1,12 +1,37 @@
-<section data-testid="secOverview" class="project content pass">
+<section
+  data-testid="secOverview"
+  class="project content"
+  [class.pass]="project.failCount === 0 && project.skippedCount === 0 && project.passCount > 0"
+  [class.fail]="project.failCount > 0"
+  [class.skipped]="project.failCount === 0 && project.skippedCount > 0"
+>
   <div class="avatar" data-testid="divAvatar">{{ avatar() }}</div>
   <div class="data">
     <p class="title" data-testid="spnProject">{{ project.key }}</p>
+
     <div class="basic-data">
       <div class="value">
         <span class="label">Version:</span>
         <span data-testid="spnVersion">{{ project.version }}</span>
       </div>
+      <div class="value">
+        <span class="label">Last Report:</span>
+        <span data-testid="spnVersion">{{ project.lastReport | date : "short" }}</span>
+      </div>
+      <div class="value">
+        <span class="label">Scenarios:</span>
+        <span data-testid="spnVersion">{{ project.passCount + project.failCount + project.skippedCount }}</span>
+      </div>
     </div>
+
+    <div class="badges">
+      <tui-badge class="pass" [class.not-relevant]="project.passCount === 0" size="xl"><tui-icon icon="@tui.check" />{{ project.passCount }}</tui-badge>
+      <tui-badge class="fail" [class.not-relevant]="project.failCount === 0" size="xl"><tui-icon icon="@tui.x" />{{ project.failCount }}</tui-badge>
+      <tui-badge class="skipped" [class.not-relevant]="project.skippedCount === 0" size="xl"><tui-icon icon="@tui.skip-forward" class="skipped" />{{ project.skippedCount }}</tui-badge>
+    </div>
+  </div>
+
+  <div class="open" (click)="open()">
+    <tui-icon class="open" [icon]="Icons.chevron_right" />
   </div>
 </section>

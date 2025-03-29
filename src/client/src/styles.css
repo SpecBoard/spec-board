@@ -1,14 +1,19 @@
 @import "tailwindcss";
 
 :root {
-  --pass: #74cf8c;
+  --pass: #509e2f;
   --fail: #f9423a;
+  --skipped: #ffc845;
+
+  --text: #010b13;
+  --text--invert: #fffafa;
 }
 
 * {
   @apply font-mono;
 
   font-size: small;
+  color: var(--text);
 }
 
 html,
