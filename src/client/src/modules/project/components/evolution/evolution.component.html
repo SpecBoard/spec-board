@@ -1,0 +1,18 @@
+<section class="content">
+  <span class="title--section text-center">Project Evolution</span>
+
+  <div class="evolution">
+    @for (item of evolution; track $index) {
+    <div class="entry">
+      <div class="version">
+        <span class="version">{{ item.version }}</span>
+        <tui-icon icon="@tui.external-link"></tui-icon>
+      </div>
+
+      <status-bar [pass]="item.pass" [fail]="item.fail" [skipped]="item.skipped"></status-bar>
+
+      <span>{{ item.pass + item.fail + item.skipped }}</span>
+    </div>
+    }
+  </div>
+</section>

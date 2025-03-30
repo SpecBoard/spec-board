@@ -14,7 +14,7 @@ describe('ProjectStore', () => {
     const sut = createSUT();
     const projects = [ProjectOverviewFaker.random(), ProjectOverviewFaker.random()];
 
-    jest.spyOn(sut.inject(ProjectService), 'getAsync').mockResolvedValue(projects);
+    jest.spyOn(sut.inject(ProjectService), 'getAllAsync').mockResolvedValue(projects);
 
     // Act
     await sut.service.loadAsync();

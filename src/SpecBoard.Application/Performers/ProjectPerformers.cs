@@ -4,7 +4,8 @@ using STrain;
 namespace SpecBoard.Application.Performers
 {
 	public class ProjectPerformers : IQueryPerformer<SpecBoard.GetProjectsQuery, IEnumerable<SpecBoard.GetProjectsQuery.Result>>,
-		IQueryPerformer<SpecBoard.GetProjectSummaryQuery, SpecBoard.GetProjectSummaryQuery.Result>
+		IQueryPerformer<SpecBoard.GetProjectSummaryQuery, SpecBoard.GetProjectSummaryQuery.Result>,
+		IQueryPerformer<SpecBoard.GetProjectEvolutionQuery, IEnumerable<SpecBoard.GetProjectEvolutionQuery.Result>>
 	{
 		private readonly IRequestSender _sender;
 
@@ -46,6 +47,24 @@ namespace SpecBoard.Application.Performers
 				Duration = summary.Duration,
 				FailedScenarios = [.. summary.FailedScenarios.Select(fs => new GetProjectSummaryQuery.Result.ScenarioSummary { Id = fs.Id, Segments = fs.Segments })],
 			};
+		}
+
+		public async Task<IEnumerable<GetProjectEvolutionQuery.Result>> PerformAsync(GetProjectEvolutionQuery query, CancellationToken cancellationToken)
+		{
+			_logger.LogDebug("Querying evolution of {Project} project", query.Key);
+			var evolution = await _sender.GetAsync<SpecStore.GetProjectEvolutionQuery, IEnumerable<SpecStore.GetProjectEvolutionQuery.Result>>(new SpecStore.GetProjectEvolutionQuery(query.Key), cancellationToken);
+
+			_logger.LogInformation("Queried evolution of {Project} project", query.Key);
+			_logger.LogTrace("Evolution: {@Evolution}", evolution);
+
+			return evolution!.Select(e => new GetProjectEvolutionQuery.Result
+			{
+				Id = e.Id,
+				Version = e.Version,
+				Pass = e.Pass,
+				Fail = e.Fail,
+				Skipped = e.Skipped
+			});
 		}
 	}
 

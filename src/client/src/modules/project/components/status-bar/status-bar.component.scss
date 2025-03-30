@@ -1,0 +1,37 @@
+div {
+  width: 100%;
+  height: 100%;
+
+  &.status-bar {
+    --pass-width: attr(data-pass fr);
+    --fail-width: attr(data-fail fr);
+    --skipped-width: attr(data-skipped fr);
+
+    display: grid;
+    grid-template-columns: var(--fail-width) var(--pass-width) var(--skipped-width);
+  }
+
+  &.segment {
+    text-align: center;
+    align-content: center;
+
+    font-weight: bold;
+
+    padding-top: 2px;
+    padding-bottom: 2px;
+  }
+
+  &.segment--fail {
+    background-color: var(--fail);
+    color: var(--text--invert);
+  }
+
+  &.segment--pass {
+    background-color: var(--pass);
+    color: var(--text--invert);
+  }
+
+  &.segment--skipped {
+    background-color: var(--skipped);
+  }
+}

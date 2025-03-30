@@ -1,0 +1,41 @@
+section.content {
+  display: grid;
+  grid-template-rows: max-content auto;
+  row-gap: 24px;
+}
+
+div {
+  width: 100%;
+
+  &.evolution {
+    display: grid;
+    grid-template-rows: max-content max-content max-content max-content;
+    row-gap: 4px;
+  }
+
+  &.entry {
+    display: grid;
+    grid-template-columns: max-content 1fr max-content;
+    column-gap: 4px;
+
+    align-content: center;
+  }
+
+  &.version {
+    cursor: pointer;
+
+    & > tui-icon {
+      font-size: 1rem;
+
+      border-width: 1px;
+
+      vertical-align: super;
+    }
+  }
+}
+
+span {
+  &.version {
+    font-weight: bold;
+  }
+}

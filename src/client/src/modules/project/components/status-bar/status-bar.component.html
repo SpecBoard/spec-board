@@ -1,0 +1,17 @@
+<div class="status-bar" [attr.data-pass]="pass" [attr.data-fail]="fail" [attr.data-skipped]="skipped">
+  <div class="segment segment--fail">
+    @if (showValue && fail > 0) {
+    {{ fail }}
+    }
+  </div>
+  <div class="segment segment--pass">
+    @if (showValue && pass > 0) {
+    {{ pass }}
+    }
+  </div>
+  <div class="segment segment--skipped">
+    @if ( showValue && skipped > 0) {
+    {{ skipped }}
+    }
+  </div>
+</div>

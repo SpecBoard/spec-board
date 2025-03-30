@@ -14,15 +14,15 @@
     </div>
   </div>
 
-  <div class="status-bar" [attr.data-pass]="summary()?.pass" [attr.data-fail]="summary()?.fail" [attr.data-skipped]="summary()?.skipped">
-    <div class="status-bar--fail"></div>
-    <div class="status-bar--pass"></div>
-    <div class="status-bar--skipped"></div>
-  </div>
+  @if (summary()) {
+  <status-bar [pass]="summary()!.pass" [fail]="summary()!.fail" [skipped]="summary()!.skipped" [showValue]="false"></status-bar>
+  }
 
   <div class="summary">
     @if (summary()) {
     <project-summary [summary]="summary()!"></project-summary>
+    } @if (evolution()) {
+    <project-evolution [evolution]="evolution()!"></project-evolution>
     }
   </div>
 </section>

@@ -4,22 +4,28 @@ import { ProjectSummary } from '../models/project-summary';
 import { ProjectService } from '../services/project.service';
 import { DatePipe } from '@angular/common';
 import { SummaryComponent } from '../components/summary/summary.component';
+import { ProjectEvolution } from '../models/project-evolution';
+import { EvolutionComponent } from '../components/evolution/evolution.component';
+import { StatusBarComponent } from '../components/status-bar/status-bar.component';
 
 @Component({
   selector: 'project.summary.page',
-  imports: [DatePipe, SummaryComponent],
+  imports: [DatePipe, SummaryComponent, EvolutionComponent, StatusBarComponent],
   templateUrl: './summary.page.component.html',
   styleUrl: './summary.page.component.scss',
 })
 export class SummaryPageComponent implements OnInit {
   public readonly avatar: Signal<string> = computed(() => this.getAvatar(this.summary()?.key ?? ''));
   public readonly summary = signal<ProjectSummary | undefined>(undefined);
+  public readonly evolution = signal<ProjectEvolution[] | undefined>(undefined);
 
   constructor(private readonly route: ActivatedRoute, private readonly projectService: ProjectService) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(async (p) => {
-      this.summary.set(await this.projectService.getSummaryAsync(p['key']));
+      const key = p['key'];
+      this.summary.set(await this.projectService.getSummaryAsync(key));
+      this.evolution.set(await this.projectService.getEvolutionAsync(key));
     });
   }
 

@@ -26,6 +26,7 @@ namespace Specboard.Wireup
 			{
 				builder.AddPerformer<IQueryPerformer<GetProjectsQuery, IEnumerable<GetProjectsQuery.Result>>, ProjectPerformers>();
 				builder.AddPerformer<IQueryPerformer<GetProjectSummaryQuery, GetProjectSummaryQuery.Result>, ProjectPerformers>();
+				builder.AddPerformer<IQueryPerformer<GetProjectEvolutionQuery, IEnumerable<GetProjectEvolutionQuery.Result>>, ProjectPerformers>();
 
 				builder.AddMvcRequestReceiver()
 					.UseLogger();

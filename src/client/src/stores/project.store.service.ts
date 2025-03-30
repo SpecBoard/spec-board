@@ -18,6 +18,6 @@ export class ProjectStore {
 
   public async loadAsync(): Promise<void> {
     console.log('Loading Projects');
-    this.value.next(await this.projectService.getAsync());
+    this.value.next(await this.projectService.getAllAsync());
   }
 }
