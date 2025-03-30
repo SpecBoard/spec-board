@@ -2,7 +2,13 @@ export interface ProjectSummary {
   key: string;
   version: string;
   lastReport: Date;
-  passCount: number;
-  failCount: number;
-  skippedCount: number;
+  pass: number;
+  fail: number;
+  skipped: number;
+  failedScenarios: ScenarioSummary[];
+}
+
+export interface ScenarioSummary {
+  id: number;
+  segments: string[];
 }

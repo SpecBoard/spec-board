@@ -23,9 +23,33 @@ namespace SpecBoard.Test.Unit.Queries
 			Assert.Equal(summary.Key, result.Key);
 			Assert.Equal(summary.Version, result.Version);
 			Assert.Equal(summary.LastReport, result.LastReport);
-			Assert.Equal(summary.PassCount, result.PassCount);
-			Assert.Equal(summary.FailCount, result.FailCount);
-			Assert.Equal(summary.SkippedCount, result.SkippedCount);
+			Assert.Equal(summary.Pass, result.Pass);
+			Assert.Equal(summary.Fail, result.Fail);
+			Assert.Equal(summary.Skipped, result.Skipped);
+			Assert.Collection(result.FailedScenarios, [.. summary.FailedScenarios.Inspect()]);
+		}
+	}
+
+	file static class GetProjectSummaryQueryTestExtensions
+	{
+		public static IEnumerable<Action<SpecBoard.GetProjectSummaryQuery.Result.ScenarioSummary>> Inspect(this IEnumerable<SpecStore.GetProjectSummaryQuery.Result.ScenarioSummary> scenarios)
+		{
+			foreach (var scenario in scenarios)
+			{
+				yield return s =>
+				{
+					Assert.Equal(scenario.Id, s.Id);
+					Assert.Collection(s.Segments, [.. scenario.Segments.Inspect()]);
+				};
+			}
+		}
+
+		public static IEnumerable<Action<string>> Inspect(this IEnumerable<string> values)
+		{
+			foreach (var value in values)
+			{
+				yield return v => Assert.Equal(value, v);
+			}
 		}
 	}
 }

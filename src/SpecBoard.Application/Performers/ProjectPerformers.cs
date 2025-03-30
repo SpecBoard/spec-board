@@ -40,9 +40,10 @@ namespace SpecBoard.Application.Performers
 				Key = summary.Key,
 				Version = summary.Version,
 				LastReport = summary.LastReport,
-				PassCount = summary.PassCount,
-				FailCount = summary.FailCount,
-				SkippedCount = summary.SkippedCount
+				Pass = summary.Pass,
+				Fail = summary.Fail,
+				Skipped = summary.Skipped,
+				FailedScenarios = [.. summary.FailedScenarios.Select(fs => new GetProjectSummaryQuery.Result.ScenarioSummary { Id = fs.Id, Segments = fs.Segments })],
 			};
 		}
 	}

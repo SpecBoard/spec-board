@@ -52,7 +52,11 @@ input[type="checkbox"].fail[data-appearance="primary"] {
 
 .title {
   font-weight: bold;
-  font-size: 1.6em;
+  font-size: 1.6rem;
+}
+
+.title--section {
+  font-size: 0.8rem;
 }
 
 .label {

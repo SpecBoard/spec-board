@@ -1,19 +1,18 @@
 <section class="content">
   <div class="header">
-    <div
-      class="status"
-      [class.status--pass]="summary.failCount === 0 && summary.skippedCount === 0"
-      [class.status--fail]="summary.failCount > 0"
-      [class.status--skipped]="summary.failCount === 0 && summary.skippedCount > 0"
-    >
-      @if (summary.failCount > 0) {
-      <tui-icon [icon]="Icons.fail"></tui-icon>
-      } @if (summary.skippedCount > 0 && summary.failCount === 0) {
-      <tui-icon [icon]="Icons.skipped"></tui-icon>
-      } @if (summary.failCount === 0 && summary.skippedCount === 0) {
-      <tui-icon [icon]="Icons.pass"></tui-icon>
-      }
+    @switch (state()) { @case (State.Pass) {
+    <div class="status status--pass">
+      <tui-icon data-testid="stsPass" [icon]="Icons.pass"></tui-icon>
     </div>
+    } @case (State.Fail) {
+    <div class="status status--fail">
+      <tui-icon data-testid="stsFail" [icon]="Icons.fail"></tui-icon>
+    </div>
+    } @case (State.Skipped) {
+    <div class="status status--skipped">
+      <tui-icon data-testid="stsSkipped" [icon]="Icons.skipped"></tui-icon>
+    </div>
+    }}
     <div class="divider"></div>
     <div class="data">
       <div class="first-row">
@@ -24,14 +23,25 @@
         <tui-icon icon="@tui.external-link"></tui-icon>
       </div>
       <div class="summary">
-        <span class="status">@if (summary.failCount > 0) { Failed } @else if (summary.skippedCount > 0) { Skipped } @else { Passed }</span>
-        <span class="summary">{{ summary.failCount }} scenario(s) were failed out of {{ summary.passCount + summary.failCount + summary.skippedCount }} scenario(s)</span>
+        @switch (state()) { @case (State.Pass) {
+        <span data-testid="spnStatus" class="state">Passed</span>
+        <span data-testid="spnStatusDescription">All of the {{ scenarios() }} scenario(s) were passed</span>
+        } @case (State.Fail) {
+        <span data-testid="spnStatus" class="state">Failed</span>
+        <span data-testid="spnStatusDescription">{{ summary.fail }} scenario(s) were failed out of {{ scenarios() }} scenario(s)</span>
+        } @case (State.Skipped) {
+        <span data-testid="spnStatus" class="state">Passed</span>
+        <span data-testid="spnStatusDescription">All of the {{ scenarios() }} scenario(s) were passed ({{ summary.skipped }} did not run)</span>
+        }}
       </div>
     </div>
   </div>
-  <div class="details">
-    @if (summary.failCount > 0) {
-    <span>Feature 1 > Rule 1 > Scenario 1</span>
+  <div class="failed-scenarios">
+    <span class="title--section text-center">Failed Scenario(s)</span>
+    @if (summary.fail === 0) {
+    <span class="text-center font-bold">No failed scenario</span>
+    } @for (scenario of summary.failedScenarios; track $index) {
+    <span data-testid="spnFailedScenario" class="scenario--failed">{{ scenario.segments.join(" > ") }}</span>
     }
   </div>
 </section>

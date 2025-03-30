@@ -14,7 +14,7 @@
     </div>
   </div>
 
-  <div class="status-bar" [attr.data-pass]="summary()?.passCount" [attr.data-fail]="summary()?.failCount" [attr.data-skipped]="summary()?.skippedCount">
+  <div class="status-bar" [attr.data-pass]="summary()?.pass" [attr.data-fail]="summary()?.fail" [attr.data-skipped]="summary()?.skipped">
     <div class="status-bar--fail"></div>
     <div class="status-bar--pass"></div>
     <div class="status-bar--skipped"></div>
