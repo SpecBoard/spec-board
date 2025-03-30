@@ -26,6 +26,7 @@ namespace SpecBoard.Test.Unit.Queries
 			Assert.Equal(summary.Pass, result.Pass);
 			Assert.Equal(summary.Fail, result.Fail);
 			Assert.Equal(summary.Skipped, result.Skipped);
+			Assert.Equal(summary.Duration, result.Duration);
 			Assert.Collection(result.FailedScenarios, [.. summary.FailedScenarios.Inspect()]);
 		}
 	}

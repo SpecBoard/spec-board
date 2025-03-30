@@ -1,6 +1,6 @@
 section.content {
   display: grid;
-  grid-template-rows: max-content max-content;
+  grid-auto-rows: max-content auto;
 
   row-gap: 8px;
 }
@@ -92,9 +92,9 @@ div {
 
   &.failed-scenarios {
     display: grid;
-    grid-template-rows: max-content max-content;
+    grid-auto-rows: max-content;
 
-    row-gap: 8px;
+    row-gap: 4px;
   }
 }
 

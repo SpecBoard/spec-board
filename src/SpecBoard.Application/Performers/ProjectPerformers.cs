@@ -43,6 +43,7 @@ namespace SpecBoard.Application.Performers
 				Pass = summary.Pass,
 				Fail = summary.Fail,
 				Skipped = summary.Skipped,
+				Duration = summary.Duration,
 				FailedScenarios = [.. summary.FailedScenarios.Select(fs => new GetProjectSummaryQuery.Result.ScenarioSummary { Id = fs.Id, Segments = fs.Segments })],
 			};
 		}

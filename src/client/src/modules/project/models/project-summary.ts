@@ -1,3 +1,5 @@
+import { TimeSpan } from '../../shared/types/time-span';
+
 export interface ProjectSummary {
   key: string;
   version: string;
@@ -5,6 +7,7 @@ export interface ProjectSummary {
   pass: number;
   fail: number;
   skipped: number;
+  duration: TimeSpan;
   failedScenarios: ScenarioSummary[];
 }
 

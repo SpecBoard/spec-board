@@ -1,5 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { ProjectSummary, ScenarioSummary } from '../models/project-summary';
+import { TimeSpanFaker } from '../../shared/__test_utils__/time-span-faker';
 
 export class ProjectSummaryFaker {
   public static random(): ProjectSummary {
@@ -10,6 +11,7 @@ export class ProjectSummaryFaker {
       pass: faker.number.int(),
       fail: faker.number.int(),
       skipped: faker.number.int(),
+      duration: TimeSpanFaker.random(),
       failedScenarios: faker.helpers.multiple<ScenarioSummary>(
         (_, __) => {
           return {

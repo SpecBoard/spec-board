@@ -2,10 +2,11 @@ import { Component, computed, Input, input, Signal } from '@angular/core';
 import { ProjectSummary } from '../../models/project-summary';
 import { TuiIcon } from '@taiga-ui/core';
 import { Icons } from '../../helpers/Icons';
+import { DurationPipe } from '../../../shared/pipes/duration.pipe';
 
 @Component({
   selector: 'project-summary',
-  imports: [TuiIcon],
+  imports: [TuiIcon, DurationPipe],
   templateUrl: './summary.component.html',
   styleUrl: './summary.component.scss',
 })

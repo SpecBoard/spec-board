@@ -13,6 +13,7 @@ namespace SpecBoard
 			public required int Pass { get; init; }
 			public required int Fail { get; init; }
 			public required int Skipped { get; init; }
+			public required TimeSpan Duration { get; init; }
 			public IEnumerable<ScenarioSummary> FailedScenarios { get; init; } = [];
 
 			public record ScenarioSummary

@@ -18,7 +18,7 @@
       <div class="first-row">
         <div class="duration">
           <tui-icon icon="@tui.clock"></tui-icon>
-          <span>24m 58s</span>
+          <span>{{ summary.duration | duration }} </span>
         </div>
         <tui-icon icon="@tui.external-link"></tui-icon>
       </div>
@@ -36,12 +36,11 @@
       </div>
     </div>
   </div>
+  @if (summary.fail > 0) {
   <div class="failed-scenarios">
-    <span class="title--section text-center">Failed Scenario(s)</span>
-    @if (summary.fail === 0) {
-    <span class="text-center font-bold">No failed scenario</span>
-    } @for (scenario of summary.failedScenarios; track $index) {
+    @for (scenario of summary.failedScenarios; track $index) {
     <span data-testid="spnFailedScenario" class="scenario--failed">{{ scenario.segments.join(" > ") }}</span>
     }
   </div>
+  }
 </section>
