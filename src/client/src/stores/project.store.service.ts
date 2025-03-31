@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ProjectService } from '../modules/project/services/project.service';
 import { ProjectOverview } from '../modules/project/models/project-overview';
 import { BehaviorSubject } from 'rxjs';
+import { LoadingService } from '../modules/shared/services/loading.service';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,7 @@ import { BehaviorSubject } from 'rxjs';
 export class ProjectStore {
   private readonly value = new BehaviorSubject<ProjectOverview[]>([]);
 
-  constructor(private readonly projectService: ProjectService) {}
+  constructor(private readonly projectService: ProjectService, public readonly loadingService: LoadingService) {}
 
   public Value$ = this.value.asObservable();
   public get Value(): ProjectOverview[] {
@@ -18,6 +19,6 @@ export class ProjectStore {
 
   public async loadAsync(): Promise<void> {
     console.log('Loading Projects');
-    this.value.next(await this.projectService.getAllAsync());
+    this.loadingService.loadAsync(async () => this.value.next(await this.projectService.getAllAsync()));
   }
 }
