@@ -25,7 +25,7 @@ export class SummaryPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(async (p) => {
-      this.loadingService.loadAsync(async () => {
+      await this.loadingService.loadAsync(async () => {
         const key = p['key'];
         this.summary.set(await this.projectService.getSummaryAsync(key));
         this.evolution.set(await this.projectService.getEvolutionAsync(key));
