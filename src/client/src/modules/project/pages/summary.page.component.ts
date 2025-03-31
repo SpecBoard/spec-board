@@ -8,10 +8,11 @@ import { ProjectEvolution } from '../models/project-evolution';
 import { EvolutionComponent } from '../components/evolution/evolution.component';
 import { StatusBarComponent } from '../components/status-bar/status-bar.component';
 import { LoadingService } from '../../shared/services/loading.service';
+import { PageComponent } from '../../shared/pages/page/page.component';
 
 @Component({
   selector: 'project.summary.page',
-  imports: [DatePipe, SummaryComponent, EvolutionComponent, StatusBarComponent],
+  imports: [DatePipe, SummaryComponent, EvolutionComponent, StatusBarComponent, PageComponent],
   templateUrl: './summary.page.component.html',
   styleUrl: './summary.page.component.scss',
 })
