@@ -1,13 +1,15 @@
-<div class="content">
-  <section class="filters">
-    <h1>Filters</h1>
-    <input tuiSwitch class="pass" type="checkbox" [ngModel]="true" />
-    <input tuiSwitch class="fail" type="checkbox" [ngModel]="true" />
-  </section>
+<page>
+  <div class="content">
+    <section class="filters">
+      <h1>Filters</h1>
+      <input tuiSwitch class="pass" type="checkbox" [ngModel]="true" />
+      <input tuiSwitch class="fail" type="checkbox" [ngModel]="true" />
+    </section>
 
-  <div class="projects">
-    @for (project of (projectStore.Value$ | async); track project.key) {
-    <project-overview [project]="project"></project-overview>
-    }
+    <div class="projects">
+      @for (project of (projectStore.Value$ | async); track project.key) {
+      <project-overview [project]="project"></project-overview>
+      }
+    </div>
   </div>
-</div>
+</page>

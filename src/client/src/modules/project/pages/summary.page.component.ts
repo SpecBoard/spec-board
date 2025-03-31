@@ -7,10 +7,12 @@ import { SummaryComponent } from '../components/summary/summary.component';
 import { ProjectEvolution } from '../models/project-evolution';
 import { EvolutionComponent } from '../components/evolution/evolution.component';
 import { StatusBarComponent } from '../components/status-bar/status-bar.component';
+import { LoadingService } from '../../shared/services/loading.service';
+import { PageComponent } from '../../shared/pages/page/page.component';
 
 @Component({
   selector: 'project.summary.page',
-  imports: [DatePipe, SummaryComponent, EvolutionComponent, StatusBarComponent],
+  imports: [DatePipe, SummaryComponent, EvolutionComponent, StatusBarComponent, PageComponent],
   templateUrl: './summary.page.component.html',
   styleUrl: './summary.page.component.scss',
 })
@@ -19,13 +21,15 @@ export class SummaryPageComponent implements OnInit {
   public readonly summary = signal<ProjectSummary | undefined>(undefined);
   public readonly evolution = signal<ProjectEvolution[] | undefined>(undefined);
 
-  constructor(private readonly route: ActivatedRoute, private readonly projectService: ProjectService) {}
+  constructor(private readonly route: ActivatedRoute, private readonly projectService: ProjectService, private readonly loadingService: LoadingService) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(async (p) => {
-      const key = p['key'];
-      this.summary.set(await this.projectService.getSummaryAsync(key));
-      this.evolution.set(await this.projectService.getEvolutionAsync(key));
+      await this.loadingService.loadAsync(async () => {
+        const key = p['key'];
+        this.summary.set(await this.projectService.getSummaryAsync(key));
+        this.evolution.set(await this.projectService.getEvolutionAsync(key));
+      });
     });
   }
 

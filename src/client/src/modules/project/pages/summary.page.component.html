@@ -1,28 +1,30 @@
-<section class="content">
-  <div class="header">
-    <div class="avatar">{{ avatar() }}</div>
-    <span class="title">{{ summary()?.key }}</span>
-    <div class="details">
-      <div class="value">
-        <span class="label">Version:</span>
-        <span data-testid="spnVersion">{{ summary()?.version }}</span>
-      </div>
-      <div class="value">
-        <span class="label">Last Report:</span>
-        <span data-testid="spnLastReport">{{ summary()?.lastReport | date : "short" }}</span>
+<page>
+  <section class="content">
+    <div class="header">
+      <div class="avatar">{{ avatar() }}</div>
+      <span class="title">{{ summary()?.key }}</span>
+      <div class="details">
+        <div class="value">
+          <span class="label">Version:</span>
+          <span data-testid="spnVersion">{{ summary()?.version }}</span>
+        </div>
+        <div class="value">
+          <span class="label">Last Report:</span>
+          <span data-testid="spnLastReport">{{ summary()?.lastReport | date : "short" }}</span>
+        </div>
       </div>
     </div>
-  </div>
 
-  @if (summary()) {
-  <status-bar [pass]="summary()!.pass" [fail]="summary()!.fail" [skipped]="summary()!.skipped" [showValue]="false"></status-bar>
-  }
-
-  <div class="summary">
     @if (summary()) {
-    <project-summary [summary]="summary()!"></project-summary>
-    } @if (evolution()) {
-    <project-evolution [evolution]="evolution()!"></project-evolution>
+    <status-bar [pass]="summary()!.pass" [fail]="summary()!.fail" [skipped]="summary()!.skipped" [showValue]="false"></status-bar>
     }
-  </div>
-</section>
+
+    <div class="summary">
+      @if (summary()) {
+      <project-summary [summary]="summary()!"></project-summary>
+      } @if (evolution()) {
+      <project-evolution [evolution]="evolution()!"></project-evolution>
+      }
+    </div>
+  </section>
+</page>
