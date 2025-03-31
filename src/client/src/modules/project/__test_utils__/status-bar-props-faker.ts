@@ -30,7 +30,7 @@ export class StatusBarPropsFaker {
 
   public static pass(value: number) {
     return {
-      pass: 0,
+      pass: value,
       fail: faker.number.int(),
       skipped: faker.number.int(),
       showValue: true,
@@ -40,7 +40,7 @@ export class StatusBarPropsFaker {
   public static fail(value: number) {
     return {
       pass: faker.number.int(),
-      fail: 0,
+      fail: value,
       skipped: faker.number.int(),
       showValue: true,
     };
@@ -50,7 +50,7 @@ export class StatusBarPropsFaker {
     return {
       pass: faker.number.int(),
       fail: faker.number.int(),
-      skipped: 0,
+      skipped: value,
       showValue: true,
     };
   }

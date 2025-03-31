@@ -13,10 +13,10 @@ export class ProjectSummaryFaker {
       skipped: faker.number.int(),
       duration: TimeSpanFaker.random(),
       failedScenarios: faker.helpers.multiple<ScenarioSummary>(
-        (_, __) => {
+        () => {
           return {
             id: faker.number.int(),
-            segments: faker.helpers.multiple((_, __) => faker.string.alphanumeric(), { count: { min: 1, max: 3 } }),
+            segments: faker.helpers.multiple(() => faker.string.alphanumeric(), { count: { min: 1, max: 3 } }),
           };
         },
         { count: { min: 1, max: 3 } }

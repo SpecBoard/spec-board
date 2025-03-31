@@ -1,5 +1,3 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { StatusBarComponent } from './status-bar.component';
 import { byTestId, createComponentFactory } from '@ngneat/spectator/jest';
 import { StatusBarPropsFaker } from '../../__test_utils__/status-bar-props-faker';
