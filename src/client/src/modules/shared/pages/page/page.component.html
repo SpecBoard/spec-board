@@ -1,5 +1,4 @@
-@if (this.loadingService.loading()) {
 <loading-screen></loading-screen>
-} @else {
+@if (!this.loadingService.loading()) {
 <ng-content></ng-content>
 }
