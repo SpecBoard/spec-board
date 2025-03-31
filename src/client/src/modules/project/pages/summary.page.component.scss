@@ -1,0 +1,84 @@
+section.content {
+  display: grid;
+  grid-template-rows: 60px max-content max-content 1fr;
+
+  padding: 8px;
+  row-gap: 8px;
+}
+
+div {
+  width: 100%;
+  height: 100%;
+
+  &.header {
+    display: grid;
+    grid-template-columns: max-content 1fr max-content;
+
+    column-gap: 8px;
+  }
+
+  &.avatar {
+    @apply h-full;
+
+    background-color: #008ad880;
+    padding: 8px;
+    aspect-ratio: 1/1;
+
+    text-align: center;
+    align-content: center;
+
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--text--invert);
+
+    border-radius: 4px;
+  }
+
+  &.details {
+    display: grid;
+    grid-template-rows: min-content min-content;
+
+    row-gap: 4px;
+
+    align-content: center;
+    justify-content: end;
+  }
+
+  &.value {
+    @apply grid grid-cols-[max-content_max-content];
+
+    column-gap: 4px;
+    justify-content: end;
+  }
+
+  &.status-bar {
+    --fail-width: attr(data-fail fr);
+    --pass-width: attr(data-pass fr);
+    --skipped-width: attr(data-skipped fr);
+
+    display: grid;
+    grid-template-columns: var(--fail-width) var(--pass-width) var(--skipped-width);
+
+    height: 0.4rem;
+    width: 100%;
+  }
+
+  &.status-bar--pass {
+    background-color: var(--pass);
+  }
+
+  &.status-bar--fail {
+    background-color: var(--fail);
+  }
+
+  &.status-bar--skipped {
+    background-color: var(--skipped);
+  }
+
+  &.summary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    column-gap: 4px;
+  }
+}

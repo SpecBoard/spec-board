@@ -4,9 +4,9 @@ using Moq;
 
 namespace SpecBoard.Test.Unit.Queries
 {
-	[Trait("Feature", "MP - Managing Projects")]
 	public partial class ProjectPerformersTest
 	{
+		[Trait("Feature", "MP - Managing Projects")]
 		[Fact(DisplayName = "[UNIT][PRP-001] - Get Projects")]
 		public async Task ProjectPerformers_PerformAsync_GetProjects()
 		{

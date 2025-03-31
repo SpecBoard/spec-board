@@ -1,4 +1,4 @@
-export interface Project {
+export interface ProjectOverview {
   key: string;
   version: string;
   lastReport: Date;

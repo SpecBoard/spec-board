@@ -25,6 +25,8 @@ namespace Specboard.Wireup
 			builder.AddCQS(builder =>
 			{
 				builder.AddPerformer<IQueryPerformer<GetProjectsQuery, IEnumerable<GetProjectsQuery.Result>>, ProjectPerformers>();
+				builder.AddPerformer<IQueryPerformer<GetProjectSummaryQuery, GetProjectSummaryQuery.Result>, ProjectPerformers>();
+				builder.AddPerformer<IQueryPerformer<GetProjectEvolutionQuery, IEnumerable<GetProjectEvolutionQuery.Result>>, ProjectPerformers>();
 
 				builder.AddMvcRequestReceiver()
 					.UseLogger();

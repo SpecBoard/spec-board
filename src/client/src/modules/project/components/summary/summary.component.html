@@ -1,0 +1,46 @@
+<section class="content">
+  <div class="header">
+    @switch (state()) { @case (State.Pass) {
+    <div class="status status--pass">
+      <tui-icon data-testid="stsPass" [icon]="Icons.pass"></tui-icon>
+    </div>
+    } @case (State.Fail) {
+    <div class="status status--fail">
+      <tui-icon data-testid="stsFail" [icon]="Icons.fail"></tui-icon>
+    </div>
+    } @case (State.Skipped) {
+    <div class="status status--skipped">
+      <tui-icon data-testid="stsSkipped" [icon]="Icons.skipped"></tui-icon>
+    </div>
+    }}
+    <div class="divider"></div>
+    <div class="data">
+      <div class="first-row">
+        <div class="duration">
+          <tui-icon icon="@tui.clock"></tui-icon>
+          <span>{{ summary.duration | duration }} </span>
+        </div>
+        <tui-icon icon="@tui.external-link"></tui-icon>
+      </div>
+      <div class="summary">
+        @switch (state()) { @case (State.Pass) {
+        <span data-testid="spnStatus" class="state">Passed</span>
+        <span data-testid="spnStatusDescription">All of the {{ scenarios() }} scenario(s) were passed</span>
+        } @case (State.Fail) {
+        <span data-testid="spnStatus" class="state">Failed</span>
+        <span data-testid="spnStatusDescription">{{ summary.fail }} scenario(s) were failed out of {{ scenarios() }} scenario(s)</span>
+        } @case (State.Skipped) {
+        <span data-testid="spnStatus" class="state">Passed</span>
+        <span data-testid="spnStatusDescription">All of the {{ scenarios() }} scenario(s) were passed ({{ summary.skipped }} did not run)</span>
+        }}
+      </div>
+    </div>
+  </div>
+  @if (summary.fail > 0) {
+  <div class="failed-scenarios">
+    @for (scenario of summary.failedScenarios; track $index) {
+    <span data-testid="spnFailedScenario" class="scenario--failed">{{ scenario.segments.join(" > ") }}</span>
+    }
+  </div>
+  }
+</section>
