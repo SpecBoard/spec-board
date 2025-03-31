@@ -24,7 +24,7 @@ export class HomePageComponent implements OnInit {
   constructor(public readonly projectStore: ProjectStore, public readonly loadingService: LoadingService) {}
 
   ngOnInit() {
-    this.loadingService.loadAsync(async () => {
+    void this.loadingService.loadAsync(async () => {
       void this.projectStore.loadAsync();
     });
   }

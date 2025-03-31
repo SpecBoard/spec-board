@@ -62,7 +62,9 @@ describe('LoadingService', () => {
     const promise = Promise.resolve();
 
     // Act
-    sut.service.loadAsync(async () => await promise);
+    sut.service.loadAsync(async () => {
+      await promise;
+    });
 
     // Assert
     expect(sut.service.loading()).toEqual(true);

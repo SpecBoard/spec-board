@@ -1,6 +1,5 @@
-import { byTestId, createComponentFactory, createHostFactory } from '@ngneat/spectator/jest';
+import { byTestId, createHostFactory, mockProvider } from '@ngneat/spectator/jest';
 import { PageComponent } from './page.component';
-import { mockProvider } from '@ngneat/spectator/jest';
 import { LoadingService } from '../../services/loading.service';
 import { signal } from '@angular/core';
 
