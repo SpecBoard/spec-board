@@ -1,79 +1,58 @@
 import { HttpClient } from '@angular/common/http';
-import { LogDriver, LogLabel } from './log-driver';
-import { Level } from '../logger.service';
+import { LogDriver } from './log-driver';
 import { Inject } from '@angular/core';
 import { LokiDriverOptions } from './loki-driver-options';
+import { LogLabel, LogLevel } from '../models/types';
 
 export class LokiDriver extends LogDriver {
-  private readonly lokiLevels = ['trace', 'debug', 'info', 'warning', 'error'];
+  private readonly levels = ['trace', 'debug', 'info', 'warning', 'error'];
   private readonly path = 'loki/api/v1/push';
 
   constructor(private readonly client: HttpClient, @Inject('LokiDriverOptions') private readonly options: LokiDriverOptions) {
     super();
   }
 
-  override verbose(message: string, ...params: unknown[]): void {
-    throw new Error('Method not implemented.');
-  }
-  override debug(message: string, ...params: unknown[]): void {
-    const renderedMessage = this.renderMessage(message, this.getLabels(message, params));
-    const entry = this.getEntry(this.getLabels(message, params));
-
-    const labels = this.options.labels;
-    labels.push({ key: 'level', value: this.lokiLevels[Level.Debug - 1] });
-    labels.push({ key: 'Message', value: renderedMessage });
-    labels.push({ key: 'MessageTemplate', value: message });
-
-    this.client.post(`${this.options.url}${this.path}`, this.getRequest(labels, entry)).subscribe();
-  }
-  override information(message: string, ...params: unknown[]): void {
-    const renderedMessage = this.renderMessage(message, this.getLabels(message, params));
-    const entry = this.getEntry(this.getLabels(message, params));
-
-    const labels = this.options.labels;
-    labels.push({ key: 'level', value: this.lokiLevels[Level.Information - 1] });
-    labels.push({ key: 'Message', value: renderedMessage });
-    labels.push({ key: 'MessageTemplate', value: message });
-
-    this.client.post(`${this.options.url}${this.path}`, this.getRequest(labels, entry)).subscribe();
+  override verbose(template: string, labels: LogLabel): void {
+    this.log(LogLevel.Verbose, template, labels);
   }
 
-  override warning(message: string, ...params: string[]): void {
-    throw new Error('Method not implemented.');
-  }
-  override error(message: string, error: Error | undefined, ...params: string[]): void {
-    throw new Error('Method not implemented.');
+  override debug(template: string, labels: LogLabel): void {
+    this.log(LogLevel.Debug, template, labels);
   }
 
-  private getEntry(labels: LogLabel[]): entry {
-    const result: entry = {};
+  override information(template: string, labels: LogLabel): void {
+    this.log(LogLevel.Information, template, labels);
+  }
 
-    for (const label of labels) {
-      result[label.key] = label.value;
+  override warning(template: string, labels: LogLabel): void {
+    this.log(LogLevel.Warning, template, labels);
+  }
+
+  override error(template: string, labels: LogLabel, error: Error | undefined): void {
+    if (error) {
+      labels['ErrorMessage'] = error?.message;
+      labels['ErrorCause'] = error?.cause;
+    }
+    this.log(LogLevel.Error, template, labels);
+  }
+
+  private log(level: LogLevel, template: string, labels: LogLabel): void {
+    const stream: LogLabel = {
+      level: this.levels[level],
+      MessageTemplate: template,
+      Message: this.render(template, labels),
+    };
+
+    for (const key of Object.keys(this.options.labels)) {
+      stream[key] = this.options.labels[key];
     }
 
-    return result;
+    this.client.post(`${this.options.url}${this.path}`, this.getRequest(stream, JSON.stringify(labels))).subscribe();
   }
 
-  private getRequest(labels: LogLabel[], entry: entry): request {
-    const stream: entry = {};
-    for (const label of labels) {
-      stream[label.key] = label.value;
-    }
-
+  private getRequest(labels: LogLabel, message: string) {
     return {
-      streams: [{ stream: stream, values: [[(Date.now() * 1000000).toString(), JSON.stringify(entry)]] }],
+      streams: [{ stream: labels, values: [[(Date.now() * 1000000).toString(), message]] }],
     };
   }
 }
-
-export interface request {
-  streams: [
-    {
-      stream: entry;
-      values: string[][];
-    }
-  ];
-}
-
-export type entry = Record<string, unknown>;

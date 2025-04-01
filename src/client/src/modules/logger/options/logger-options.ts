@@ -1,5 +1,5 @@
-import { Level } from '../logger.service';
+import { LogLevel } from '../models/types';
 
 export interface LoggerOptions {
-  level: Level;
+  level: LogLevel;
 }

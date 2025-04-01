@@ -1,6 +1,6 @@
-import { Level } from '../logger.service';
+import { LogLevel } from '../models/types';
 
 export interface ConsoleDriverOptions {
-  level: Level;
+  level: LogLevel;
   format: string;
 }

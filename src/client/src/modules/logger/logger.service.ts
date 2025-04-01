@@ -1,60 +1,67 @@
 import { Inject, Injectable } from '@angular/core';
 import { LogDriver } from './drivers/log-driver';
 import { LoggerOptions } from './options/logger-options';
+import { LogLabel, LogLevel } from './models/types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoggerService {
+  private readonly _expression = '{.[^}]*}';
+
   constructor(@Inject('LogDriver') private readonly drivers: LogDriver[], @Inject('LoggerOptions') private readonly options: LoggerOptions) {}
 
   public verbose(message: string, ...params: string[]) {
-    if (this.options.level > Level.Verbose) return;
+    if (this.options.level > LogLevel.Verbose) return;
 
     for (const driver of this.drivers) {
-      driver.verbose(message, ...params);
+      driver.verbose(message, this.getLabels(message, params));
     }
   }
 
   public debug(message: string, ...params: unknown[]) {
-    if (this.options.level > Level.Debug) return;
+    if (this.options.level > LogLevel.Debug) return;
 
     for (const driver of this.drivers) {
-      driver.debug(message, ...params);
+      driver.debug(message, this.getLabels(message, params));
     }
   }
 
   public information(message: string, ...params: string[]) {
-    if (this.options.level > Level.Information) return;
+    if (this.options.level > LogLevel.Information) return;
 
     for (const driver of this.drivers) {
-      driver.information(message, ...params);
+      driver.information(message, this.getLabels(message, params));
     }
   }
 
   public warning(message: string, ...params: string[]) {
-    if (this.options.level > Level.Warning) return;
+    if (this.options.level > LogLevel.Warning) return;
 
     for (const driver of this.drivers) {
-      driver.warning(message, ...params);
+      driver.warning(message, this.getLabels(message, params));
     }
   }
 
   public error(message: string, error: Error | undefined = undefined, ...params: string[]) {
-    if (this.options.level > Level.Error) return;
+    if (this.options.level > LogLevel.Error) return;
 
     for (const driver of this.drivers) {
-      driver.error(message, error, ...params);
+      driver.error(message, this.getLabels(message, params), error);
     }
   }
-}
 
-export enum Level {
-  Verbose = 1,
-  Debug = 2,
-  Information = 3,
-  Warning = 4,
-  Error = 5,
+  protected getLabels(template: string, values: unknown[]): LogLabel {
+    const result: LogLabel = {};
 
-  Off = 6,
+    const expression = new RegExp(this._expression);
+    let iteration = 0;
+    let value = template;
+    for (let placeholder = expression.exec(value); placeholder; placeholder = expression.exec(value)) {
+      result[`${placeholder[0].replace('{', '').replace('}', '').trim()}`] = values[iteration++];
+      value = value.replace(placeholder[0], '');
+    }
+
+    return result;
+  }
 }
