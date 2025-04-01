@@ -5,11 +5,13 @@ import { provideEventPlugins } from '@taiga-ui/event-plugins';
 
 import { routes } from './app.routes';
 import { ProjectStore } from '../stores/project.store.service';
-import { provideHttpClient } from '@angular/common/http';
+import { HttpClient, provideHttpClient } from '@angular/common/http';
 import { ProjectService } from '../modules/project/services/project.service';
 
 import { Level } from '../modules/logger/logger.service';
 import { provideConsoleDriver, provideLogger } from '../modules/logger/providers';
+import { LokiDriver } from '../modules/logger/drivers/loki-driver';
+import { LokiDriverOptions } from '../modules/logger/drivers/loki-driver-options';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -22,5 +24,25 @@ export const appConfig: ApplicationConfig = {
     provideEventPlugins(),
     provideLogger((options) => (options.level = Level.Verbose)),
     provideConsoleDriver((options) => (options.level = Level.Information)),
+    {
+      provide: 'LogDriver',
+      useClass: LokiDriver,
+      deps: [HttpClient, 'LokiDriverOptions'],
+      multi: true,
+    },
+    {
+      provide: 'LokiDriverOptions',
+      useFactory: () => {
+        const result: LokiDriverOptions = {
+          url: 'https://loki.mihben.site/',
+          labels: [
+            { key: 'Application', value: 'SpecBoard' },
+            { key: 'Component', value: 'Client' },
+            { key: 'Environment', value: 'Development' },
+          ],
+        };
+        return result;
+      },
+    },
   ],
 };
