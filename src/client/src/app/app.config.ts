@@ -8,6 +8,19 @@ import { ProjectStore } from '../stores/project.store.service';
 import { provideHttpClient } from '@angular/common/http';
 import { ProjectService } from '../modules/project/services/project.service';
 
+import { Level } from '../modules/logger/logger.service';
+import { provideConsoleDriver, provideLogger } from '../modules/logger/providers';
+
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), ProjectStore, ProjectService, provideHttpClient(), provideAnimations(), provideEventPlugins()],
+  providers: [
+    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideRouter(routes),
+    ProjectStore,
+    ProjectService,
+    provideHttpClient(),
+    provideAnimations(),
+    provideEventPlugins(),
+    provideLogger((options) => (options.level = Level.Verbose)),
+    provideConsoleDriver((options) => (options.level = Level.Information)),
+  ],
 };
