@@ -3,7 +3,7 @@ import { LoggerService } from './logger.service';
 import { LoggerOptions } from './options/logger-options';
 import { ConsoleDriverOptions } from './options/console-driver-options';
 import { ConsoleDriver } from './drivers/console-driver';
-import { LokiDriverOptions } from './drivers/loki-driver-options';
+import { LokiDriverOptions } from './options/loki-driver-options';
 import { LokiDriver } from './drivers/loki-driver';
 import { HttpClient } from '@angular/common/http';
 import { LogLevel } from './models/types';
@@ -59,6 +59,8 @@ export function provideLokiDriver(configure: (otpions: LokiDriverOptions) => voi
         const result: LokiDriverOptions = {
           labels: {},
           url: '',
+          bufferSize: 50,
+          pushInterval: 5000,
         };
         configure(result);
         return result;

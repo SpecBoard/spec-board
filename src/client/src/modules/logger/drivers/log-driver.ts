@@ -7,6 +7,8 @@ export abstract class LogDriver {
   abstract warning(template: string, labels: LogLabel): void;
   abstract error(template: string, labels: LogLabel, error: Error | undefined): void;
 
+  abstract flush(): void;
+
   protected render(template: string, labels: LogLabel) {
     let message = template;
     for (const key of Object.keys(labels)) {

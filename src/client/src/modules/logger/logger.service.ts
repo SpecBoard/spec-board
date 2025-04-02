@@ -15,7 +15,7 @@ export class LoggerService {
     if (this.options.level > LogLevel.Verbose) return;
 
     for (const driver of this.drivers) {
-      driver.verbose(message, this.getLabels(message, params));
+      void this.logAsync(() => driver.verbose(message, this.getLabels(message, params)));
     }
   }
 
@@ -23,7 +23,7 @@ export class LoggerService {
     if (this.options.level > LogLevel.Debug) return;
 
     for (const driver of this.drivers) {
-      driver.debug(message, this.getLabels(message, params));
+      void this.logAsync(() => driver.debug(message, this.getLabels(message, params)));
     }
   }
 
@@ -31,7 +31,7 @@ export class LoggerService {
     if (this.options.level > LogLevel.Information) return;
 
     for (const driver of this.drivers) {
-      driver.information(message, this.getLabels(message, params));
+      void this.logAsync(() => driver.information(message, this.getLabels(message, params)));
     }
   }
 
@@ -39,7 +39,7 @@ export class LoggerService {
     if (this.options.level > LogLevel.Warning) return;
 
     for (const driver of this.drivers) {
-      driver.warning(message, this.getLabels(message, params));
+      void this.logAsync(() => driver.warning(message, this.getLabels(message, params)));
     }
   }
 
@@ -47,8 +47,16 @@ export class LoggerService {
     if (this.options.level > LogLevel.Error) return;
 
     for (const driver of this.drivers) {
-      driver.error(message, this.getLabels(message, params), error);
+      void this.logAsync(() => driver.error(message, this.getLabels(message, params), error));
     }
+  }
+
+  protected logAsync(func: () => void): Promise<void> {
+    return new Promise(() => {
+      func();
+
+      return Promise.resolve();
+    });
   }
 
   protected getLabels(template: string, values: unknown[]): LogLabel {

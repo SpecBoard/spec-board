@@ -31,6 +31,8 @@ export class ConsoleDriver extends LogDriver {
     }
   }
 
+  override flush(): void {}
+
   private renderMessage(level: LogLevel, messageTemplate: string, labels: LogLabel): string {
     return this.options.format.replace('{timestamp}', formatDate(Date.now(), 'HH:mm:ss', 'en')).replace('{level}', this.levels[level]).replace('{message}', super.render(messageTemplate, labels));
   }
