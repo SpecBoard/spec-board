@@ -56,7 +56,7 @@ export function provideConsoleDriver(configure: (options: ConsoleDriverOptions) 
   ];
 }
 
-export function provideLokiDriver(configure: (otpions: LokiDriverOptions) => void = () => {}): Provider[] {
+export function provideLokiDriver(configure: (options: LokiDriverOptions) => void = () => {}): Provider[] {
   return [
     { provide: LOG_DRIVER, useClass: LokiDriver, deps: [HttpClient, 'LokiDriverOptions'], multi: true },
     {

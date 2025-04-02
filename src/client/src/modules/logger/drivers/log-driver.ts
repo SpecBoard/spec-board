@@ -12,7 +12,7 @@ export abstract class LogDriver {
   protected render(template: string, labels: LogLabel) {
     let message = template;
     for (const key of Object.keys(labels)) {
-      message = message.replace(`{${key}}`, `${String(labels[key])}`);
+      message = message.replace(`{${key}}`, String(labels[key]));
     }
     return message;
   }

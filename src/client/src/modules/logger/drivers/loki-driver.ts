@@ -38,8 +38,8 @@ export class LokiDriver extends LogDriver {
 
   override error(template: string, labels: LogLabel, error: Error | undefined): void {
     if (error) {
-      labels['ErrorMessage'] = error?.message;
-      labels['ErrorCause'] = error?.cause;
+      labels['ErrorMessage'] = error.message;
+      labels['ErrorCause'] = error.cause;
     }
     this.log(LogLevel.Error, template, labels);
   }

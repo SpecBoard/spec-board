@@ -76,8 +76,6 @@ export class LoggerService {
   protected logAsync(func: () => void): Promise<void> {
     return new Promise(() => {
       func();
-
-      return Promise.resolve();
     });
   }
 
@@ -88,7 +86,7 @@ export class LoggerService {
     let iteration = 0;
     let value = template;
     for (let placeholder = expression.exec(value); placeholder; placeholder = expression.exec(value)) {
-      result[`${placeholder[0].replace('{', '').replace('}', '').trim()}`] = values[iteration++];
+      result[placeholder[0].replace('{', '').replace('}', '').trim()] = values[iteration++];
       value = value.replace(placeholder[0], '');
     }
 
