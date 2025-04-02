@@ -13,7 +13,7 @@ export class LoggerService {
 
   constructor(@Inject(LOG_DRIVER) private readonly drivers: LogDriver[], @Inject(LOG_ENRICHER) private readonly enrichers: LogEnricher[], @Inject('LoggerOptions') private readonly options: LoggerOptions) {}
 
-  public verbose(message: string, ...params: string[]) {
+  public verbose(message: string, ...params: unknown[]) {
     if (this.options.level > LogLevel.Verbose) return;
 
     for (const driver of this.drivers) {
@@ -37,7 +37,7 @@ export class LoggerService {
     }
   }
 
-  public information(message: string, ...params: string[]) {
+  public information(message: string, ...params: unknown[]) {
     if (this.options.level > LogLevel.Information) return;
 
     for (const driver of this.drivers) {
@@ -49,7 +49,7 @@ export class LoggerService {
     }
   }
 
-  public warning(message: string, ...params: string[]) {
+  public warning(message: string, ...params: unknown[]) {
     if (this.options.level > LogLevel.Warning) return;
 
     for (const driver of this.drivers) {
@@ -61,7 +61,7 @@ export class LoggerService {
     }
   }
 
-  public error(message: string, error: Error | undefined = undefined, ...params: string[]) {
+  public error(message: string, error: Error | undefined = undefined, ...params: unknown[]) {
     if (this.options.level > LogLevel.Error) return;
 
     for (const driver of this.drivers) {
@@ -86,7 +86,7 @@ export class LoggerService {
     let iteration = 0;
     let value = template;
     for (let placeholder = expression.exec(value); placeholder; placeholder = expression.exec(value)) {
-      result[placeholder[0].replace('{', '').replace('}', '').trim()] = values[iteration++];
+      result[placeholder[0].replace('{', '').replace('}', '').trim()] = String(values[iteration++]);
       value = value.replace(placeholder[0], '');
     }
 

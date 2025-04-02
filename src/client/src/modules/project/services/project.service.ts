@@ -16,7 +16,7 @@ export class ProjectService {
   public async getAllAsync(): Promise<ProjectOverview[]> {
     const result = await lastValueFrom<ProjectOverview[]>(this.client.get<ProjectOverview[]>(`${this.url}api/project`));
     sourceContext(ProjectService, () => {
-      this.logger.information('{Count} project has been queried', result.length.toString());
+      this.logger.information('{Count} project has been queried', result.length);
     });
     return result;
   }

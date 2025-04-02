@@ -1,16 +1,17 @@
-import { createHttpFactory } from '@ngneat/spectator';
+import { createHttpFactory } from '@ngneat/spectator/jest';
 import { ProjectService } from './project.service';
-import { MockService } from 'ng-mocks';
 import { ProjectOverviewFaker } from '../__test_utils__/project-overview-faker';
 import { of } from 'rxjs';
 import { ProjectSummaryFaker } from '../__test_utils__/project-summary-faker';
 import { faker } from '@faker-js/faker';
 import { ProjectEvolutionFaker } from '../__test_utils__/project-evolution-faker';
+import { LoggerService } from '../../logger/logger.service';
+import { HttpClient } from '@angular/common/http';
 
 describe('ProjectService', () => {
   const createSUT = createHttpFactory({
     service: ProjectService,
-    mockProvider: MockService,
+    mocks: [HttpClient, LoggerService],
   });
 
   it('[UNIT][PRS-001]: Query projects', async () => {
