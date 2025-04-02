@@ -5,6 +5,7 @@ import { lastValueFrom } from 'rxjs';
 import { ProjectSummary } from '../models/project-summary';
 import { ProjectEvolution } from '../models/project-evolution';
 import { LoggerService } from '../../logger/logger.service';
+import { sourceContext } from '../../logger/enrichers/source-context-enricher';
 
 @Injectable()
 export class ProjectService {
@@ -14,7 +15,7 @@ export class ProjectService {
 
   public async getAllAsync(): Promise<ProjectOverview[]> {
     const result = await lastValueFrom<ProjectOverview[]>(this.client.get<ProjectOverview[]>(`${this.url}api/project`));
-
+    sourceContext(ProjectService, () => this.logger.information('{Count} project has been queried', result.length.toString()));
     return result;
   }
 

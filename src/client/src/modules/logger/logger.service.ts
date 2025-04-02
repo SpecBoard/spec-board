@@ -2,6 +2,8 @@ import { Inject, Injectable } from '@angular/core';
 import { LogDriver } from './drivers/log-driver';
 import { LoggerOptions } from './options/logger-options';
 import { LogLabel, LogLevel } from './models/types';
+import { LogEnricher } from './enrichers/log-enricher';
+import { LOG_DRIVER, LOG_ENRICHER } from './providers';
 
 @Injectable({
   providedIn: 'root',
@@ -9,13 +11,17 @@ import { LogLabel, LogLevel } from './models/types';
 export class LoggerService {
   private readonly _expression = '{.[^}]*}';
 
-  constructor(@Inject('LogDriver') private readonly drivers: LogDriver[], @Inject('LoggerOptions') private readonly options: LoggerOptions) {}
+  constructor(@Inject(LOG_DRIVER) private readonly drivers: LogDriver[], @Inject(LOG_ENRICHER) private readonly enrichers: LogEnricher[], @Inject('LoggerOptions') private readonly options: LoggerOptions) {}
 
   public verbose(message: string, ...params: string[]) {
     if (this.options.level > LogLevel.Verbose) return;
 
     for (const driver of this.drivers) {
-      void this.logAsync(() => driver.verbose(message, this.getLabels(message, params)));
+      void this.logAsync(() => {
+        const labels = this.getLabels(message, params);
+        for (const enricher of this.enrichers) enricher.enrich(labels);
+        driver.verbose(message, labels);
+      });
     }
   }
 
@@ -23,7 +29,11 @@ export class LoggerService {
     if (this.options.level > LogLevel.Debug) return;
 
     for (const driver of this.drivers) {
-      void this.logAsync(() => driver.debug(message, this.getLabels(message, params)));
+      void this.logAsync(() => {
+        const labels = this.getLabels(message, params);
+        for (const enricher of this.enrichers) enricher.enrich(labels);
+        driver.debug(message, labels);
+      });
     }
   }
 
@@ -31,7 +41,11 @@ export class LoggerService {
     if (this.options.level > LogLevel.Information) return;
 
     for (const driver of this.drivers) {
-      void this.logAsync(() => driver.information(message, this.getLabels(message, params)));
+      void this.logAsync(() => {
+        const labels = this.getLabels(message, params);
+        for (const enricher of this.enrichers) enricher.enrich(labels);
+        driver.information(message, labels);
+      });
     }
   }
 
@@ -39,7 +53,11 @@ export class LoggerService {
     if (this.options.level > LogLevel.Warning) return;
 
     for (const driver of this.drivers) {
-      void this.logAsync(() => driver.warning(message, this.getLabels(message, params)));
+      void this.logAsync(() => {
+        const labels = this.getLabels(message, params);
+        for (const enricher of this.enrichers) enricher.enrich(labels);
+        driver.warning(message, labels);
+      });
     }
   }
 
@@ -47,7 +65,11 @@ export class LoggerService {
     if (this.options.level > LogLevel.Error) return;
 
     for (const driver of this.drivers) {
-      void this.logAsync(() => driver.error(message, this.getLabels(message, params), error));
+      void this.logAsync(() => {
+        const labels = this.getLabels(message, params);
+        for (const enricher of this.enrichers) enricher.enrich(labels);
+        driver.error(message, labels, error);
+      });
     }
   }
 

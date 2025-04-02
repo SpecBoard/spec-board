@@ -5,12 +5,11 @@ import { provideEventPlugins } from '@taiga-ui/event-plugins';
 
 import { routes } from './app.routes';
 import { ProjectStore } from '../stores/project.store.service';
-import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ProjectService } from '../modules/project/services/project.service';
 
-import { provideConsoleDriver, provideLogger, provideLokiDriver } from '../modules/logger/providers';
+import { provideBrowserLogEnricher, provideConsoleDriver, provideHttpLogInterceptor, provideLogger, provideLokiDriver, provideSourceContextLogEnricher } from '../modules/logger/providers';
 import { LogLevel } from '../modules/logger/models/types';
-import { LogHttpInterceptor } from '../modules/logger/interceptors/log-http-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -22,7 +21,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideEventPlugins(),
     provideLogger((options) => (options.level = LogLevel.Verbose)),
-    provideConsoleDriver((options) => (options.level = LogLevel.Information)),
+    provideConsoleDriver((options) => (options.level = LogLevel.Verbose)),
     provideLokiDriver((options) => {
       options.url = 'https://loki.mihben.site/';
       options.labels = {
@@ -30,7 +29,10 @@ export const appConfig: ApplicationConfig = {
         Component: 'Client',
         Environment: 'Development',
       };
+      options.level = LogLevel.Verbose;
     }),
-    { provide: HTTP_INTERCEPTORS, useClass: LogHttpInterceptor, multi: true },
+    provideHttpLogInterceptor(),
+    provideBrowserLogEnricher(),
+    provideSourceContextLogEnricher(),
   ],
 };

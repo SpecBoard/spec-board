@@ -72,6 +72,8 @@ export class LokiDriver extends LogDriver {
   }
 
   private log(level: LogLevel, template: string, labels: LogLabel): void {
+    if (this.options.level > level) return;
+
     const entries = this.entries.getValue();
     entries.push({ timestamp: Date.now() * 1000000, level: level, template: template, labels: labels });
     this.entries.next(entries);
