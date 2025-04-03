@@ -2,6 +2,7 @@ import { byTestId, createComponentFactory } from '@ngneat/spectator/jest';
 import { OverviewComponent } from './overview.component';
 import { ProjectOverviewFaker } from '../../__test_utils__/project-overview-faker';
 import { Router } from '@angular/router';
+import { NavigatorService } from '../../../shared/services/navigator.service';
 
 describe('OverviewComponent', () => {
   const createCUT = createComponentFactory({
@@ -124,13 +125,13 @@ describe('OverviewComponent', () => {
       },
     });
 
-    const spy = jest.spyOn(cut.inject(Router), 'navigate');
+    const spy = jest.spyOn(cut.inject(NavigatorService), 'toProjectSummary');
 
     // Act
     cut.click(byTestId('divOpen'));
 
     // Assert
-    expect(spy).toHaveBeenCalledWith(['/project', project.key]);
+    expect(spy).toHaveBeenCalledWith(project.key);
   });
 
   const getAvatar = (key: string): string => {

@@ -4,7 +4,7 @@ import { DatePipe } from '@angular/common';
 import { TuiBadge } from '@taiga-ui/kit';
 import { TuiIcon, TuiIconPipe } from '@taiga-ui/core';
 import { Icons } from '../../helpers/Icons';
-import { Router } from '@angular/router';
+import { NavigatorService } from '../../../shared/services/navigator.service';
 
 @Component({
   selector: 'project-overview',
@@ -26,7 +26,7 @@ export class OverviewComponent {
 
   public avatar = signal<string | undefined>(undefined);
 
-  constructor(private readonly router: Router) {}
+  constructor(private readonly navigator: NavigatorService) {}
 
   private getAvatar(key: string) {
     const space = key.indexOf('_');
@@ -37,7 +37,7 @@ export class OverviewComponent {
   }
 
   public open() {
-    this.router.navigate(['/project', this.project.key]);
+    this.navigator.toProjectSummary(this.project.key);
   }
 
   public Icons = Icons;

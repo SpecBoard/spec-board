@@ -1,4 +1,5 @@
 ﻿using LightInject;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using SpecBoard;
 using SpecBoard.Application.Performers;
 using STrain;
@@ -41,6 +42,10 @@ namespace Specboard.Wireup
 					_ => throw new InvalidOperationException("Not supported request")
 				}, builder => builder.AddGenericHttpSender("specstore", (options, configuration) => configuration.Bind("Services:SpecStore", options)));
 			});
+
+			builder.Services.RemoveAll<IProblemDetailsWriter>();
+			builder.Services.AddExceptionHandler()
+				.UseDefaultWriters();
 		}
 	}
 }
