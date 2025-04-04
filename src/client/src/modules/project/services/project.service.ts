@@ -22,7 +22,7 @@ export class ProjectService {
   }
 
   public async getSummaryAsync(key: string): Promise<ProjectSummary> {
-    const result = await lastValueFrom<ProjectSummary>(this.client.get<ProjectSummary>(`${this.url}api/project/test/summary`));
+    const result = await lastValueFrom<ProjectSummary>(this.client.get<ProjectSummary>(`${this.url}api/project/${key}/summary`));
 
     return result;
   }
