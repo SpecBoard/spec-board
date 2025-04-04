@@ -31,6 +31,7 @@ namespace SpecBoard.Application.Performers
 		public async Task<GetProjectSummaryQuery.Result> PerformAsync(GetProjectSummaryQuery query, CancellationToken cancellationToken)
 		{
 			_logger.LogDebug("Querying summary of {Project} project", query.Key);
+
 			var summary = await _sender.GetAsync<SpecStore.GetProjectSummaryQuery, SpecStore.GetProjectSummaryQuery.Result>(new SpecStore.GetProjectSummaryQuery(query.Key), cancellationToken);
 
 			_logger.LogInformation("Queried summary of {Project} project", summary!.Key);

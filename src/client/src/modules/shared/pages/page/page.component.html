@@ -1,4 +1,18 @@
 <loading-screen></loading-screen>
 @if (!this.loadingService.loading()) {
-<ng-content></ng-content>
+<div class="app__container">
+  <section class="app__header">
+    <div>Logo</div>
+    <div></div>
+    <div class="app__profile">
+      <div>Profile</div>
+      <p>SpecBoard User</p>
+    </div>
+  </section>
+  <ng-content></ng-content>
+  <section class="app__footer">
+    <p>Projects: 4</p>
+    <p>Last Report: 2025-10-15 15:14</p>
+  </section>
+</div>
 }

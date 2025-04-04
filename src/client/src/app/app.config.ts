@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, ErrorHandler, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideEventPlugins } from '@taiga-ui/event-plugins';
@@ -10,6 +10,8 @@ import { ProjectService } from '../modules/project/services/project.service';
 
 import { provideBrowserLogEnricher, provideConsoleDriver, provideHttpLogInterceptor, provideLogger, provideLokiDriver, provideSourceContextLogEnricher } from '../modules/logger/providers';
 import { LogLevel } from '../modules/logger/models/types';
+import { GlobalErrorHandler } from './global-error-handler';
+import { TUI_ALERT_POSITION } from '@taiga-ui/core';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -34,5 +36,8 @@ export const appConfig: ApplicationConfig = {
     provideHttpLogInterceptor(),
     provideBrowserLogEnricher(),
     provideSourceContextLogEnricher(),
+    { provide: ErrorHandler, useClass: GlobalErrorHandler },
+
+    { provide: TUI_ALERT_POSITION, useValue: 'auto auto 2rem auto' },
   ],
 };

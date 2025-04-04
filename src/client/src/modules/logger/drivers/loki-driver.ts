@@ -40,6 +40,8 @@ export class LokiDriver extends LogDriver {
     if (error) {
       labels['ErrorMessage'] = error.message;
       labels['ErrorCause'] = error.cause;
+      labels['ErrorStack'] = error.stack;
+      labels['ErrorName'] = error.name;
     }
     this.log(LogLevel.Error, template, labels);
   }

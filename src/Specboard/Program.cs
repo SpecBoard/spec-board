@@ -17,6 +17,8 @@ builder.ConfigureSTrain();
 
 var app = builder.Build();
 
+app.UseExceptionHandler();
+
 app.UseCors(builder =>
 {
 	builder.AllowAnyOrigin();
