@@ -18,6 +18,7 @@ import { ConsoleDriverOptions } from '../modules/logger/options/console-driver-o
 import { LokiDriverOptions } from '../modules/logger/options/loki-driver-options';
 
 import { provideConfiguration, provideOptions } from '@mihben/ngx-configuration';
+import { BackendOptions } from '../options/backendOptions';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -37,6 +38,7 @@ export const appConfig: ApplicationConfig = {
           };
         })
     ),
+    provideOptions(BackendOptions, (builder) => builder.bind('backend').validateDecorators()),
 
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
