@@ -1,5 +1,7 @@
+import { valueOfEnum } from '@mihben/ngx-configuration';
 import { LogLevel } from '../models/types';
 
-export interface LoggerOptions {
-  level: LogLevel;
+export class LoggerOptions {
+  @valueOfEnum(LogLevel)
+  public level!: LogLevel;
 }

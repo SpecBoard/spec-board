@@ -15,10 +15,11 @@ export class ProjectsPageObject {
   }
 
   public async versionOf(project: string) {
-    const overviews = await this.page.getByTestId("secOverview").all();
+    const overviews = await this.page.getByTestId('secOverview').all();
     for (const overview of overviews) {
       const title = await overview.getByTestId('spnProject').textContent();
-      if (title === project) return await overview.getByTestId('spnVersion').textContent();
+      if (title === project)
+        return await overview.getByTestId('spnVersion').textContent();
     }
   }
 }

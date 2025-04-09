@@ -10,11 +10,14 @@ import { LOG_DRIVER, LOG_ENRICHER } from './providers';
 })
 export class LoggerService {
   private readonly _expression = '{.[^}]*}';
+  private readonly levels: string[];
 
-  constructor(@Inject(LOG_DRIVER) private readonly drivers: LogDriver[], @Inject(LOG_ENRICHER) private readonly enrichers: LogEnricher[], @Inject('LoggerOptions') private readonly options: LoggerOptions) {}
+  constructor(@Inject(LOG_DRIVER) private readonly drivers: LogDriver[], @Inject(LOG_ENRICHER) private readonly enrichers: LogEnricher[], private readonly options: LoggerOptions) {
+    this.levels = Object.keys(LogLevel);
+  }
 
   public verbose(message: string, ...params: unknown[]) {
-    if (this.options.level > LogLevel.Verbose) return;
+    if (this.levels.indexOf(this.options.level) > 0) return;
 
     for (const driver of this.drivers) {
       void this.logAsync(() => {
@@ -26,7 +29,7 @@ export class LoggerService {
   }
 
   public debug(message: string, ...params: unknown[]) {
-    if (this.options.level > LogLevel.Debug) return;
+    if (this.levels.indexOf(this.options.level) > 1) return;
 
     for (const driver of this.drivers) {
       void this.logAsync(() => {
@@ -38,7 +41,7 @@ export class LoggerService {
   }
 
   public information(message: string, ...params: unknown[]) {
-    if (this.options.level > LogLevel.Information) return;
+    if (this.levels.indexOf(this.options.level) > 2) return;
 
     for (const driver of this.drivers) {
       void this.logAsync(() => {
@@ -50,7 +53,7 @@ export class LoggerService {
   }
 
   public warning(message: string, ...params: unknown[]) {
-    if (this.options.level > LogLevel.Warning) return;
+    if (this.levels.indexOf(this.options.level) > 3) return;
 
     for (const driver of this.drivers) {
       void this.logAsync(() => {
@@ -62,7 +65,7 @@ export class LoggerService {
   }
 
   public error(message: string, error: Error | undefined = undefined, ...params: unknown[]) {
-    if (this.options.level > LogLevel.Error) return;
+    if (this.levels.indexOf(this.options.level) > 4) return;
 
     for (const driver of this.drivers) {
       void this.logAsync(() => {
