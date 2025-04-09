@@ -6,15 +6,15 @@ import { ProjectSummary } from '../models/project-summary';
 import { ProjectEvolution } from '../models/project-evolution';
 import { LoggerService } from '../../logger/logger.service';
 import { sourceContext } from '../../logger/enrichers/source-context-enricher';
+import { BackendOptions } from '../../../options/backendOptions';
 
 @Injectable()
 export class ProjectService {
-  private readonly url = 'http://localhost:5000/';
-
-  constructor(private readonly client: HttpClient, private readonly logger: LoggerService) {}
+  constructor(private readonly client: HttpClient, private readonly options: BackendOptions, private readonly logger: LoggerService) {}
 
   public async getAllAsync(): Promise<ProjectOverview[]> {
-    const result = await lastValueFrom<ProjectOverview[]>(this.client.get<ProjectOverview[]>(`${this.url}api/project`));
+    this.logger.verbose('Getting Projects');
+    const result = await lastValueFrom<ProjectOverview[]>(this.client.get<ProjectOverview[]>(`${this.options.baseAddress}api/project`));
     sourceContext(ProjectService, () => {
       this.logger.information('{Count} project has been queried', result.length);
     });
@@ -22,13 +22,13 @@ export class ProjectService {
   }
 
   public async getSummaryAsync(key: string): Promise<ProjectSummary> {
-    const result = await lastValueFrom<ProjectSummary>(this.client.get<ProjectSummary>(`${this.url}api/project/${key}/summary`));
+    const result = await lastValueFrom<ProjectSummary>(this.client.get<ProjectSummary>(`${this.options.baseAddress}api/project/${key}/summary`));
 
     return result;
   }
 
   public async getEvolutionAsync(key: string): Promise<ProjectEvolution[]> {
-    const result = await lastValueFrom<ProjectEvolution[]>(this.client.get<ProjectEvolution[]>(`${this.url}api/project/${key}/evolution`));
+    const result = await lastValueFrom<ProjectEvolution[]>(this.client.get<ProjectEvolution[]>(`${this.options.baseAddress}api/project/${key}/evolution`));
 
     return result;
   }

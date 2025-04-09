@@ -1,11 +1,11 @@
 export enum LogLevel {
-  Verbose = 0,
-  Debug = 1,
-  Information = 2,
-  Warning = 3,
-  Error = 4,
+  Verbose = 'Verbose',
+  Debug = 'Debug',
+  Information = 'Information',
+  Warning = 'Warning',
+  Error = 'Error',
 
-  Off = 5,
+  Off = 'Off',
 }
 
 export type LogLabel = Record<string, unknown>;
