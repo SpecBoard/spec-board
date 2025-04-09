@@ -1,10 +1,14 @@
 import { LogLabel, LogLevel } from '../models/types';
 
-export interface LokiDriverOptions {
-  url: string;
-  labels: LogLabel;
-  level: LogLevel;
+export class LokiDriverOptions {
+  public url!: string;
+  public labels: LogLabel = {
+    Application: 'Application',
+    Component: 'Client',
+    Environment: 'Development',
+  };
+  public level: LogLevel = LogLevel.Information;
 
-  bufferSize: number;
-  pushInterval: number;
+  public bufferSize = 50;
+  public pushInterval = 5000;
 }

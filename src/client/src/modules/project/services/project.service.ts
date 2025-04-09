@@ -14,6 +14,7 @@ export class ProjectService {
   constructor(private readonly client: HttpClient, private readonly logger: LoggerService) {}
 
   public async getAllAsync(): Promise<ProjectOverview[]> {
+    this.logger.verbose('Getting Projects');
     const result = await lastValueFrom<ProjectOverview[]>(this.client.get<ProjectOverview[]>(`${this.url}api/project`));
     sourceContext(ProjectService, () => {
       this.logger.information('{Count} project has been queried', result.length);

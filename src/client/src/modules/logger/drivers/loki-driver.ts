@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { LogDriver } from './log-driver';
-import { Inject } from '@angular/core';
 import { LokiDriverOptions } from '../options/loki-driver-options';
 import { LogLabel, LogLevel } from '../models/types';
 import { BehaviorSubject } from 'rxjs';
@@ -8,32 +7,35 @@ import { BehaviorSubject } from 'rxjs';
 export class LokiDriver extends LogDriver {
   private readonly levels = ['trace', 'debug', 'info', 'warning', 'error'];
   private readonly path = 'loki/api/v1/push';
+  private readonly levelValues: string[];
 
-  private readonly entries = new BehaviorSubject<{ timestamp: number; level: LogLevel; template: string; labels: LogLabel }[]>([]);
+  private readonly entries = new BehaviorSubject<{ timestamp: number; level: string; template: string; labels: LogLabel }[]>([]);
 
-  constructor(private readonly client: HttpClient, @Inject('LokiDriverOptions') private readonly options: LokiDriverOptions) {
+  constructor(private readonly client: HttpClient, private readonly options: LokiDriverOptions) {
     super();
 
     this.entries.subscribe((entries) => {
       if (entries.length >= this.options.bufferSize) this.flush();
     });
     setInterval(this.flush.bind(this), this.options.pushInterval);
+
+    this.levelValues = Object.keys(LogLevel);
   }
 
   override verbose(template: string, labels: LogLabel): void {
-    this.log(LogLevel.Verbose, template, labels);
+    this.log(0, template, labels);
   }
 
   override debug(template: string, labels: LogLabel): void {
-    this.log(LogLevel.Debug, template, labels);
+    this.log(1, template, labels);
   }
 
   override information(template: string, labels: LogLabel): void {
-    this.log(LogLevel.Information, template, labels);
+    this.log(2, template, labels);
   }
 
   override warning(template: string, labels: LogLabel): void {
-    this.log(LogLevel.Warning, template, labels);
+    this.log(3, template, labels);
   }
 
   override error(template: string, labels: LogLabel, error: Error | undefined): void {
@@ -43,7 +45,7 @@ export class LokiDriver extends LogDriver {
       labels['ErrorStack'] = error.stack;
       labels['ErrorName'] = error.name;
     }
-    this.log(LogLevel.Error, template, labels);
+    this.log(4, template, labels);
   }
 
   override flush(): void {
@@ -55,7 +57,7 @@ export class LokiDriver extends LogDriver {
         const streams: { stream: LogLabel; values: string[][] }[] = [];
         for (const entry of values) {
           const stream: LogLabel = {
-            level: this.levels[entry.level],
+            level: entry.level,
             MessageTemplate: entry.template,
             Message: this.render(entry.template, entry.labels),
           };
@@ -73,11 +75,11 @@ export class LokiDriver extends LogDriver {
     });
   }
 
-  private log(level: LogLevel, template: string, labels: LogLabel): void {
-    if (this.options.level > level) return;
+  private log(level: number, template: string, labels: LogLabel): void {
+    if (this.levelValues.indexOf(this.options.level) > level) return;
 
     const entries = this.entries.getValue();
-    entries.push({ timestamp: Date.now() * 1000000, level: level, template: template, labels: labels });
+    entries.push({ timestamp: Date.now() * 1000000, level: this.levels[level], template: template, labels: labels });
     this.entries.next(entries);
   }
 }
