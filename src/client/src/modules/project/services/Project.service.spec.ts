@@ -7,10 +7,15 @@ import { faker } from '@faker-js/faker';
 import { ProjectEvolutionFaker } from '../__test_utils__/project-evolution-faker';
 import { LoggerService } from '../../logger/logger.service';
 import { HttpClient } from '@angular/common/http';
+import { BackendOptionsFaker } from '../__test_utils__/backend-options-faker';
+import { BackendOptions } from '../../../options/backendOptions';
 
 describe('ProjectService', () => {
+  const options = BackendOptionsFaker.random();
+
   const createSUT = createHttpFactory({
     service: ProjectService,
+    providers: [{ provide: BackendOptions, useValue: options }],
     mocks: [HttpClient, LoggerService],
   });
 
