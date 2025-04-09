@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, Provider } from '@angular/core';
+import { Provider } from '@angular/core';
 import { LoggerService } from './logger.service';
 import { LoggerOptions } from './options/logger-options';
 import { ConsoleDriverOptions } from './options/console-driver-options';

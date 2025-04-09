@@ -1,4 +1,4 @@
-import { ApplicationConfig, ApplicationInitStatus, ErrorHandler, inject, provideAppInitializer, provideEnvironmentInitializer, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, ErrorHandler, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideEventPlugins } from '@taiga-ui/event-plugins';
