@@ -26,6 +26,7 @@
     "@cds/core": "^6.15.1",
     "@clr/angular": "^17.9.0",
     "@clr/ui": "^17.9.0",
+    "@microsoft/signalr": "^8.0.7",
     "@mihben/ngx-configuration": "^1.0.0-rc.6",
     "@ng-icons/core": "^29.10.0",
     "@ng-icons/lucide": ">=29.0.0",
