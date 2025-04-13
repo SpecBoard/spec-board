@@ -18,7 +18,7 @@
       <div class="first-row">
         <div class="duration">
           <tui-icon icon="@tui.clock"></tui-icon>
-          <span>{{ summary.duration | duration }} </span>
+          <span>{{ summary().duration | duration }} </span>
         </div>
         <tui-icon icon="@tui.external-link"></tui-icon>
       </div>
@@ -28,17 +28,17 @@
         <span data-testid="spnStatusDescription">All of the {{ scenarios() }} scenario(s) were passed</span>
         } @case (State.Fail) {
         <span data-testid="spnStatus" class="state">Failed</span>
-        <span data-testid="spnStatusDescription">{{ summary.fail }} scenario(s) were failed out of {{ scenarios() }} scenario(s)</span>
+        <span data-testid="spnStatusDescription">{{ summary().fail }} scenario(s) were failed out of {{ scenarios() }} scenario(s)</span>
         } @case (State.Skipped) {
         <span data-testid="spnStatus" class="state">Passed</span>
-        <span data-testid="spnStatusDescription">All of the {{ scenarios() }} scenario(s) were passed ({{ summary.skipped }} did not run)</span>
+        <span data-testid="spnStatusDescription">All of the {{ scenarios() }} scenario(s) were passed ({{ summary().skipped }} did not run)</span>
         }}
       </div>
     </div>
   </div>
-  @if (summary.fail > 0) {
+  @if (summary().fail > 0) {
   <div class="failed-scenarios">
-    @for (scenario of summary.failedScenarios; track $index) {
+    @for (scenario of summary().failedScenarios; track $index) {
     <span data-testid="spnFailedScenario" class="scenario--failed">{{ scenario.segments.join(" > ") }}</span>
     }
   </div>

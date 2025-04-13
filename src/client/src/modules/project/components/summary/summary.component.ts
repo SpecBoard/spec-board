@@ -1,4 +1,4 @@
-import { Component, computed, Input, Signal } from '@angular/core';
+import { Component, computed, input, Signal } from '@angular/core';
 import { ProjectSummary } from '../../models/project-summary';
 import { TuiIcon } from '@taiga-ui/core';
 import { Icons } from '../../helpers/Icons';
@@ -13,16 +13,15 @@ import { DurationPipe } from '../../../shared/pipes/duration.pipe';
 export class SummaryComponent {
   State: typeof State = State;
 
-  @Input({ required: true })
-  public summary!: ProjectSummary;
+  public summary = input.required<ProjectSummary>();
 
   public state: Signal<State> = computed(() => {
-    if (this.summary.fail > 0) return State.Fail;
-    if (this.summary.skipped > 0) return State.Skipped;
+    if (this.summary().fail > 0) return State.Fail;
+    if (this.summary().skipped > 0) return State.Skipped;
     return State.Pass;
   });
   public scenarios: Signal<number> = computed(() => {
-    return this.summary.fail + this.summary.pass + this.summary.skipped;
+    return this.summary().fail + this.summary().pass + this.summary().skipped;
   });
 
   public Icons = Icons;

@@ -24,16 +24,29 @@ export class NotificationService {
     sourceContext(NotificationOptions, () => this.logger.debug('SignalR connection has been established'));
   }
 
-  public subscribe<T>(channel: string, handler: (message: T) => Promise<void>) {
-    this.connection.on(channel, async (message: T) => {
-      this.logger.debug('Receiving message on {Channel} channel', channel);
-      await handler(message);
-    });
-    this.logger.debug('Listening on {Channel} channel', channel);
-  }
+  public subscribe<T>(channel: string, action: (message: T) => Promise<T>): NotificationSubscription<T> {
+    const on = async (message: T) => {
+      sourceContext(NotificationSubscription<T>, () => {
+        this.logger.debug('Receive message on {Channel} channel', channel);
+        this.logger.verbose('Message: {Message}', JSON.stringify(message));
+      });
+      await action(message);
+    };
 
-  public unsubscribe<T>(channel: string, handler: (message: T) => Promise<void>) {
-    this.connection.off(channel, handler);
-    this.logger.debug('Listening has been stopped on {Channel} channel', channel);
+    this.connection.on(channel, on);
+    sourceContext(NotificationService, () => this.logger.debug('Subscribed to {Channel} channel', channel));
+
+    return new NotificationSubscription(channel, action, this.connection, this.logger);
+  }
+}
+
+export class NotificationSubscription<T> {
+  constructor(private readonly channel: string, private readonly action: (message: T) => Promise<T>, private readonly connection: SignalR.HubConnection, private readonly logger: LoggerService) {}
+
+  public unsubscribe() {
+    this.connection.off(this.channel, this.action);
+    sourceContext(NotificationSubscription<T>, () => {
+      this.logger.debug('Unsubscribed from {Channel} channel', this.channel);
+    });
   }
 }
