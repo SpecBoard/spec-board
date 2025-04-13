@@ -25,7 +25,7 @@ import { Channels } from '../messages/channels';
   styleUrls: ['./home.page.component.scss'],
 })
 export class HomePageComponent implements OnInit, OnDestroy {
-  private readonly subscription?: NotificationSubscription<ReportUploadedMessage>;
+  private subscription?: NotificationSubscription<ReportUploadedMessage>;
 
   constructor(public readonly projectStore: ProjectStore, public readonly loadingService: LoadingService, private readonly notificationService: NotificationService, public readonly alertService: TuiAlertService) {}
 
@@ -34,9 +34,9 @@ export class HomePageComponent implements OnInit, OnDestroy {
       await this.projectStore.loadAsync();
     });
 
-    this.notificationService.subscribe<ReportUploadedMessage>(Channels.reportUploaded, async (message) => {
+    this.subscription = this.notificationService.subscribe<ReportUploadedMessage>(Channels.reportUploaded, async (message) => {
       this.alertService
-        .open(`New report was uploaded for ${message.project} projects`, {
+        .open(`New report was uploaded for ${message.project} project`, {
           appearance: 'neutral',
           autoClose: 5000,
           closeable: true,
