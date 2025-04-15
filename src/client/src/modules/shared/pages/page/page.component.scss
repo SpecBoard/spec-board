@@ -13,7 +13,7 @@ section.app__header {
 }
 
 section.app__footer {
-  @apply grid grid-cols-[max-content_max-content_max-content];
+  @apply grid grid-cols-[1fr_max-content];
   @apply w-full h-full;
 
   column-gap: 0.4rem;
@@ -33,4 +33,38 @@ section.app__footer {
 }
 
 .app__profile--image {
+}
+
+.notification {
+  cursor: pointer;
+}
+
+.footer__text {
+  @apply grid grid-cols-[max-content_max-content_max-content];
+  @apply w-full h-full;
+
+  column-gap: 0.4rem;
+}
+
+div.notifications {
+  display: grid;
+  grid-template-rows: max-content 1fr;
+
+  row-gap: 1.4rem;
+}
+
+div.notifications__header {
+  display: grid;
+  grid-template-columns: 1fr max-content;
+}
+
+div.notifications__content {
+  display: grid;
+  grid-auto-rows: auto;
+
+  row-gap: 0.4rem;
+}
+
+.notifications__close {
+  cursor: pointer;
 }

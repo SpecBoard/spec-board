@@ -8,14 +8,13 @@ import { sourceContext } from '../../logger/enrichers/source-context-enricher';
   providedIn: 'root',
 })
 export class NotificationService {
-  private connection!: SignalR.HubConnection;
+  private connection?: SignalR.HubConnection;
 
   constructor(private readonly options: NotificationOptions, private readonly logger: LoggerService) {}
 
   public async connectAsync(): Promise<void> {
     sourceContext(NotificationService, () => {
       this.logger.debug('Establishing SignalR connection...');
-      this.logger.verbose('Options: {Options}', this.options);
     });
 
     this.connection = new SignalR.HubConnectionBuilder().withUrl(this.options.url).build();
@@ -32,6 +31,10 @@ export class NotificationService {
       });
       await action(message);
     };
+
+    if (!this.connection) {
+      throw new Error('SignalR connection has not been established');
+    }
 
     this.connection.on(channel, on);
     sourceContext(NotificationService, () => this.logger.debug('Subscribed to {Channel} channel', channel));

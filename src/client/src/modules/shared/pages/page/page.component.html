@@ -11,8 +11,34 @@
   </section>
   <ng-content></ng-content>
   <section class="app__footer">
-    <p>Projects: 4</p>
-    <p>Last Report: 2025-10-15 15:14</p>
+    <div class="footer__text">
+      @let projects = projectStore.Value$ | async;
+
+      <p><span class="label">Projects:</span> {{ projects!.length }}</p>
+      <div class="divider"></div>
+      <p><span class="label">Last Report:</span> {{ projects![0].key }} - {{ projects![0].lastReport | date : "short" }}</p>
+    </div>
+
+    <tui-badged-content [style.--tui-radius.%]="50">
+      <tui-badge-notification size="s" tuiSlot="top">3</tui-badge-notification>
+      <tui-icon class="notification" icon="@tui.bell" (click)="notifications.set(!notifications())"></tui-icon>
+    </tui-badged-content>
   </section>
 </div>
+} @if (notifications()) {
+<tui-drawer>
+  <div class="notifications">
+    <div class="notifications__header">
+      <span class="title">Notifications</span>
+      <tui-icon class="notifications__close" (click)="notifications.set(false)" icon="@tui.x"></tui-icon>
+    </div>
+    <div class="notifications__content">
+      <p>Notification</p>
+      <p>Notification</p>
+      <p>Notification</p>
+      <p>Notification</p>
+      <p>Notification</p>
+    </div>
+  </div>
+</tui-drawer>
 }
