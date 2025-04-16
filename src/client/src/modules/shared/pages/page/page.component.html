@@ -33,11 +33,11 @@
       <tui-icon class="notifications__close" (click)="notifications.set(false)" icon="@tui.x"></tui-icon>
     </div>
     <div class="notifications__content">
-      <p>Notification</p>
-      <p>Notification</p>
-      <p>Notification</p>
-      <p>Notification</p>
-      <p>Notification</p>
+      @let messages = messageStore.messages$ | async;
+
+      @for (message of messages; track message.date) {
+        <app-message [message]="message" (closed)="close($event)"></app-message>
+      }
     </div>
   </div>
 </tui-drawer>

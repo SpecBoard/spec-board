@@ -5,15 +5,22 @@ import { ProjectStore } from '../../../../stores/project.store.service';
 import { CommonModule } from '@angular/common';
 import { TuiButton, TuiIcon, TuiLink, TuiPopup, TuiScrollbar, TuiTitle } from '@taiga-ui/core';
 import { TuiBadge, TuiBadgedContent, TuiBadgeNotification, TuiDrawer, TuiTabs } from '@taiga-ui/kit';
+import { MessageStore } from '../../stores/message-store.service';
+import { MessageComponent } from '../../components/message/message.component';
+import { Message } from '../../models/message';
 
 @Component({
   selector: 'page',
-  imports: [LoadingScreenComponent, CommonModule, TuiIcon, TuiBadgeNotification, TuiBadgedContent, TuiDrawer, TuiPopup, TuiBadge, TuiButton, TuiDrawer, TuiLink, TuiPopup, TuiScrollbar, TuiTabs, TuiTitle],
+  imports: [LoadingScreenComponent, CommonModule, TuiIcon, TuiBadgeNotification, TuiBadgedContent, TuiDrawer, TuiPopup, TuiBadge, TuiButton, TuiDrawer, TuiLink, TuiPopup, TuiScrollbar, TuiTabs, TuiTitle, MessageComponent],
   templateUrl: './page.component.html',
   styleUrl: './page.component.scss',
 })
 export class PageComponent {
   public readonly notifications = signal(false);
 
-  constructor(public readonly loadingService: LoadingService, public readonly projectStore: ProjectStore) {}
+  constructor(public readonly loadingService: LoadingService, public readonly projectStore: ProjectStore, public readonly messageStore: MessageStore) {}
+
+  public close(message: Message) {
+    this.messageStore.clear(message);
+  }
 }
