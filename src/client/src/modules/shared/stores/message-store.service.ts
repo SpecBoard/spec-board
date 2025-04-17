@@ -18,7 +18,7 @@ export class MessageStore {
 
   constructor(private readonly notificationService: NotificationService, private readonly alertService: TuiAlertService) {}
 
-  public async initializeAsync() {
+  public initializeAsync() {
     this.notificationService.state$.subscribe((state) => {
       if (state !== HubConnectionState.Connected) return;
 

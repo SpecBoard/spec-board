@@ -26,7 +26,9 @@ export class NotificationService {
 
     this.state.next(SignalR.HubConnectionState.Connected);
 
-    sourceContext(NotificationOptions, () => this.logger.debug('SignalR connection has been established'));
+    sourceContext(NotificationOptions, () => {
+      this.logger.debug('SignalR connection has been established');
+    });
   }
 
   public subscribe<T>(channel: string, action: (message: T) => Promise<T>): NotificationSubscription<T> {
@@ -43,7 +45,9 @@ export class NotificationService {
     }
 
     this.connection.on(channel, on);
-    sourceContext(NotificationService, () => this.logger.debug('Subscribed to {Channel} channel', channel));
+    sourceContext(NotificationService, () => {
+      this.logger.debug('Subscribed to {Channel} channel', channel);
+    });
 
     return new NotificationSubscription(channel, action, this.connection, this.logger);
   }

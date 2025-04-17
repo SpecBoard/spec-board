@@ -1,6 +1,5 @@
 import { byTestId, createComponentFactory } from '@ngneat/spectator/jest';
 import { MessageComponent } from './message.component';
-import { of } from 'rxjs';
 import { NotificationDescriptionFaker } from '../../__test_utils__/message-faker';
 
 describe('MessageComponent', () => {

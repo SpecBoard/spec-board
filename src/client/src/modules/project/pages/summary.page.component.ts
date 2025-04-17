@@ -24,7 +24,7 @@ export class SummaryPageComponent implements OnInit {
   public readonly summary = signal<ProjectSummary | undefined>(undefined);
   public readonly evolution = signal<ProjectEvolution[] | undefined>(undefined);
 
-  constructor(private readonly route: ActivatedRoute, private readonly projectService: ProjectService, private readonly loadingService: LoadingService, private readonly alertService: TuiAlertService) {}
+  constructor(private readonly route: ActivatedRoute, private readonly projectService: ProjectService, private readonly loadingService: LoadingService) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(async (p) => {
