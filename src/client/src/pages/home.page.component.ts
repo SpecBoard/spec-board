@@ -32,10 +32,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
   constructor(public readonly projectStore: ProjectStore, public readonly loadingService: LoadingService, private readonly notificationService: NotificationService, public readonly alertService: TuiAlertService) {}
 
   ngOnInit() {
-    void this.loadingService.loadAsync(async () => {
-      await this.projectStore.loadAsync();
-    });
-
     this.subscription = this.notificationService.subscribe<ReportUploadedMessage>(Channels.reportUploaded, async (message) => {
       const description = NotificationDescriptionEnumeration.reportUploaded(message);
       this.alertService
