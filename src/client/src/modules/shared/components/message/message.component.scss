@@ -1,6 +1,6 @@
 div.message {
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto 1fr auto;
 
   row-gap: 12px;
 
@@ -15,7 +15,7 @@ div.message {
 
 div.message__header {
   display: grid;
-  grid-template-columns: auto 1fr auto auto;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
 
   column-gap: 4px;

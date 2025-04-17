@@ -2,11 +2,11 @@
   <div class="message__header">
     <tui-icon icon="@tui.{{ message.icon }}"></tui-icon>
     <span class="title--small">{{ message.title }}</span>
-    <tui-icon icon="@tui.open"></tui-icon>
     <tui-icon class="message__close" (click)="closed.emit(message)" icon="@tui.x"></tui-icon>
   </div>
   <div class="message__content">
     <span class="messsage__text" innerHTML="{{ message.message }}"></span>
     <span class="message__date">{{ message.timestamp | tuiFormatDate | async }} ago</span>
   </div>
+  <button tuiButton>Open</button>
 </div>
