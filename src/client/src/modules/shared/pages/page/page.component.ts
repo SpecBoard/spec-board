@@ -35,7 +35,7 @@ import { NotificationDescription } from '../../models/notification-description';
 export class PageComponent implements OnInit {
   public readonly notifications = signal(false);
 
-  constructor(public readonly projectStore: ProjectStore, public readonly messageStore: MessageStore) {}
+  constructor(public readonly loadingService: LoadingService, public readonly projectStore: ProjectStore, public readonly messageStore: MessageStore) {}
 
   ngOnInit(): void {
     void this.projectStore.loadAsync();
