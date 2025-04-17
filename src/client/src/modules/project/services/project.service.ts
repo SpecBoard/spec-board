@@ -32,4 +32,8 @@ export class ProjectService {
 
     return result;
   }
+
+  public async updateAsync(key: string, name: string) {
+    await lastValueFrom(this.client.patch(`${this.options.baseAddress}api/project/${key}`, { name: name }));
+  }
 }

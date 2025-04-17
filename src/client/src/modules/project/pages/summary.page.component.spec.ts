@@ -1,4 +1,4 @@
-import { createComponentFactory } from '@ngneat/spectator/jest';
+import { byTestId, createComponentFactory } from '@ngneat/spectator/jest';
 import { SummaryPageComponent } from './summary.page.component';
 import { ProjectService } from '../services/project.service';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
@@ -8,11 +8,20 @@ import { ProjectSummaryFaker } from '../__test_utils__/project-summary-faker';
 import { effect } from '@angular/core';
 import { ProjectEvolutionFaker } from '../__test_utils__/project-evolution-faker';
 import { NotificationService } from '../../shared/services/notification.service';
+import { MockService } from 'ng-mocks';
 
 describe('SummaryPageComponent', () => {
   const createCUT = createComponentFactory({
     component: SummaryPageComponent,
-    mocks: [ProjectService, ActivatedRoute, NotificationService],
+    mocks: [ProjectService, NotificationService],
+    providers: [
+      {
+        provide: ActivatedRoute,
+        useValue: MockService(ActivatedRoute, {
+          params: of(),
+        }),
+      },
+    ],
     detectChanges: false,
   });
 

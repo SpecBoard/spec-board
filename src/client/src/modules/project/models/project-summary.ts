@@ -2,6 +2,7 @@ import { TimeSpan } from '../../shared/types/time-span';
 
 export interface ProjectSummary {
   key: string;
+  name: string;
   version: string;
   lastReport: Date;
   pass: number;

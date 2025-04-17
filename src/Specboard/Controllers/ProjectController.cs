@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SpecBoard;
 using STrain;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
@@ -32,5 +33,16 @@ namespace Specboard.Controllers
 		{
 			return await _receiver.ReceiveQueryAsync(new SpecBoard.GetProjectEvolutionQuery { Key = key }, cancellationToken);
 		}
+
+		[HttpPatch("{key}")]
+		public async Task<IActionResult> UpdateProjectAsync(string key, [FromBody] UpdateRequest request, CancellationToken cancellationToken)
+		{
+			return await _receiver.ReceiveCommandAsync(new UpdateProjectCommand { Key = key, Name = request.Name }, cancellationToken);
+		}
+	}
+
+	public record UpdateRequest
+	{
+		public string? Name { get; init; }
 	}
 }

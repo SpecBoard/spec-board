@@ -36,6 +36,7 @@ namespace Specboard.Wireup
 				builder.AddPerformer<IQueryPerformer<SpecBoard.GetProjectsQuery, IEnumerable<SpecBoard.GetProjectsQuery.Result>>, ProjectPerformers>();
 				builder.AddPerformer<IQueryPerformer<SpecBoard.GetProjectSummaryQuery, SpecBoard.GetProjectSummaryQuery.Result>, ProjectPerformers>();
 				builder.AddPerformer<IQueryPerformer<SpecBoard.GetProjectEvolutionQuery, IEnumerable<SpecBoard.GetProjectEvolutionQuery.Result>>, ProjectPerformers>();
+				builder.AddPerformer<ICommandPerformer<SpecBoard.UpdateProjectCommand>, ProjectPerformers>();
 
 				builder.AddMvcRequestReceiver()
 					.UseLogger();

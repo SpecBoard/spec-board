@@ -91,7 +91,7 @@
   "cli": {
     "schematicCollections": ["angular-eslint"],
     "cache": {
-      "enabled": true
+      "enabled": false
     },
     "analytics": false
   }

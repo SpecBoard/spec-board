@@ -1,6 +1,6 @@
 section.content {
   display: grid;
-  grid-template-rows: 60px max-content max-content 1fr;
+  grid-template-rows: max-content max-content max-content 1fr;
 
   padding: 8px;
   row-gap: 8px;
@@ -34,21 +34,26 @@ div {
     border-radius: 4px;
   }
 
-  &.details {
+  &.information {
+    display: grid;
+    grid-template-rows: min-content 1fr;
+
+    row-gap: 8px;
+
+    align-content: center;
+  }
+
+  &.detail {
     display: grid;
     grid-template-rows: min-content min-content;
 
     row-gap: 4px;
-
-    align-content: center;
-    justify-content: end;
   }
 
   &.value {
     @apply grid grid-cols-[max-content_max-content];
 
     column-gap: 4px;
-    justify-content: end;
   }
 
   &.status-bar {
@@ -81,4 +86,37 @@ div {
 
     column-gap: 4px;
   }
+
+  &.field {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    column-gap: 4px;
+  }
+}
+
+.settings {
+  cursor: pointer;
+}
+
+.project-editor__content {
+  display: grid;
+  grid-template-rows: max-content 1fr max-content;
+
+  row-gap: 32px;
+}
+
+.project-editor__title {
+  text-align: center;
+}
+
+.project-editor__buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 4px;
+}
+
+.project-editor__form {
+  display: grid;
+  grid-template-rows: max-content max-content;
+  row-gap: 4px;
 }

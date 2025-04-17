@@ -40,5 +40,10 @@ export class OverviewComponent {
     this.navigator.toProjectSummary(this.project.key);
   }
 
+  public getTitle() {
+    if (this._project.name && this._project.name !== '') return this._project.name;
+    return this._project.key;
+  }
+
   public Icons = Icons;
 }

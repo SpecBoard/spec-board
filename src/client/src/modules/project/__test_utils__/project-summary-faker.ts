@@ -6,6 +6,7 @@ export class ProjectSummaryFaker {
   public static random(): ProjectSummary {
     return {
       key: faker.string.alpha(),
+      name: faker.string.sample(),
       version: faker.system.semver(),
       lastReport: faker.date.recent(),
       pass: faker.number.int(),
