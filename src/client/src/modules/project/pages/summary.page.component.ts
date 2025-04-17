@@ -9,7 +9,6 @@ import { EvolutionComponent } from '../components/evolution/evolution.component'
 import { StatusBarComponent } from '../components/status-bar/status-bar.component';
 import { LoadingService } from '../../shared/services/loading.service';
 import { PageComponent } from '../../shared/pages/page/page.component';
-import { TuiAlertService } from '@taiga-ui/core';
 
 @Component({
   selector: 'project.summary.page',
