@@ -17,7 +17,7 @@ namespace SpecBoard.Test.Unit.Handlers
 			await sut.HandleAsync(@event, default);
 
 			// Assert
-			_hubMock.Verify(h => h.ReportUploadedAsync(@event.Project, @event.Version, It.IsAny<CancellationToken>()), Times.Once());
+			_hubMock.Verify(h => h.ReportUploadedAsync(@event.Project, @event.Version, @event.Status, It.IsAny<CancellationToken>()), Times.Once());
 		}
 	}
 }
