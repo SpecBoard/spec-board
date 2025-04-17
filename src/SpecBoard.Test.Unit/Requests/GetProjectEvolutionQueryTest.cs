@@ -2,7 +2,7 @@
 using Bogus.Extensions;
 using Moq;
 
-namespace SpecBoard.Test.Unit.Queries
+namespace SpecBoard.Test.Unit.Requests
 {
 	public partial class ProjectPerformersTest
 	{

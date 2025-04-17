@@ -4,7 +4,7 @@ using SpecBoard.Application.Performers;
 using STrain;
 using Xunit.Abstractions;
 
-namespace SpecBoard.Test.Unit.Queries
+namespace SpecBoard.Test.Unit.Requests
 {
 	public partial class ProjectPerformersTest
 	{
@@ -28,3 +28,4 @@ namespace SpecBoard.Test.Unit.Queries
 		}
 	}
 }
+

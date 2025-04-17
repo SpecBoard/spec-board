@@ -2,7 +2,7 @@
 using Bogus.Extensions;
 using Moq;
 
-namespace SpecBoard.Test.Unit.Queries
+namespace SpecBoard.Test.Unit.Requests
 {
 	public partial class ProjectPerformersTest
 	{
@@ -34,6 +34,7 @@ namespace SpecBoard.Test.Unit.Queries
 				yield return p =>
 				{
 					Assert.Equal(project.Key, p.Key);
+					Assert.Equal(project.Name, p.Name);
 					Assert.Equal(project.Version, p.Version);
 					Assert.Equal(project.LastReport, p.LastReport);
 					Assert.Equal(project.PassCount, p.PassCount);

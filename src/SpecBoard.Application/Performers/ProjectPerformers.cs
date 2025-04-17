@@ -5,7 +5,8 @@ namespace SpecBoard.Application.Performers
 {
 	public class ProjectPerformers : IQueryPerformer<SpecBoard.GetProjectsQuery, IEnumerable<SpecBoard.GetProjectsQuery.Result>>,
 		IQueryPerformer<SpecBoard.GetProjectSummaryQuery, SpecBoard.GetProjectSummaryQuery.Result>,
-		IQueryPerformer<SpecBoard.GetProjectEvolutionQuery, IEnumerable<SpecBoard.GetProjectEvolutionQuery.Result>>
+		IQueryPerformer<SpecBoard.GetProjectEvolutionQuery, IEnumerable<SpecBoard.GetProjectEvolutionQuery.Result>>,
+		ICommandPerformer<SpecBoard.UpdateProjectCommand>
 	{
 		private readonly IRequestSender _sender;
 
@@ -40,6 +41,7 @@ namespace SpecBoard.Application.Performers
 			return new GetProjectSummaryQuery.Result
 			{
 				Key = summary.Key,
+				Name = summary.Name,
 				Version = summary.Version,
 				LastReport = summary.LastReport,
 				Pass = summary.Pass,
@@ -67,6 +69,15 @@ namespace SpecBoard.Application.Performers
 				Skipped = e.Skipped
 			});
 		}
+
+		public async Task PerformAsync(UpdateProjectCommand command, CancellationToken cancellationToken)
+		{
+			_logger.LogDebug($"Updating project: {command.Key}");
+
+			await _sender.SendAsync(new SpecStore.UpdateProjectCommand { Key = command.Key, Name = command.Name }, cancellationToken);
+
+			_logger.LogDebug($"Project {command.Key} has been updated");
+		}
 	}
 
 	file static class ProjectPerformersExtensions
@@ -76,6 +87,7 @@ namespace SpecBoard.Application.Performers
 			return projects.Select(p => new GetProjectsQuery.Result
 			{
 				Key = p.Key,
+				Name = p.Name,
 				Version = p.Version,
 				LastReport = p.LastReport,
 				PassCount = p.PassCount,
