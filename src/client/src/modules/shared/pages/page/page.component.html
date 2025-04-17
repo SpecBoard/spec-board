@@ -14,11 +14,11 @@
   <ng-content></ng-content>
   <section class="app__footer">
     <div class="footer__text">
-      @let projects = projectStore.Value$ | async;
-
+      @let projects = projectStore.Value$ | async; @if ((projects?.length ?? 0) > 0) {
       <p><span class="label">Projects:</span> {{ projects!.length }}</p>
       <div class="divider"></div>
-      <p><span class="label">Last Report:</span> {{ projects![0].key }} - {{ projects![0].lastReport | date : "short" }}</p>
+      <p><span class="label">Last Report:</span>{{ projects![0].key }} - {{ projects![0].lastReport | date : "short" }}</p>
+      }
     </div>
 
     <tui-badged-content [style.--tui-radius.%]="50">

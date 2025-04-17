@@ -2,7 +2,7 @@
   <div class="message__header">
     <tui-icon icon="@tui.{{ message.icon }}"></tui-icon>
     <span class="title--small">{{ message.title }}</span>
-    <tui-icon class="message__close" (click)="closed.emit(message)" icon="@tui.x"></tui-icon>
+    <tui-icon data-testid="btnClose" class="message__close" (click)="closed.emit(message)" icon="@tui.x"></tui-icon>
   </div>
   <div class="message__content">
     <span class="messsage__text" innerHTML="{{ message.message }}"></span>

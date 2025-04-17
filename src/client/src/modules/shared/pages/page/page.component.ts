@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { LoadingService } from '../../services/loading.service';
 import { LoadingScreenComponent } from '../../components/loading-screen/loading-screen.component';
 import { ProjectStore } from '../../../../stores/project.store.service';
@@ -32,10 +32,14 @@ import { NotificationDescription } from '../../models/notification-description';
   templateUrl: './page.component.html',
   styleUrl: './page.component.scss',
 })
-export class PageComponent {
+export class PageComponent implements OnInit {
   public readonly notifications = signal(false);
 
   constructor(public readonly loadingService: LoadingService, public readonly projectStore: ProjectStore, public readonly messageStore: MessageStore) {}
+
+  ngOnInit(): void {
+    void this.projectStore.loadAsync();
+  }
 
   public close(message: NotificationDescription) {
     this.messageStore.clear(message);

@@ -1,20 +1,23 @@
-import { byTestId, createComponentFactory } from "@ngneat/spectator/jest";
-import { MessageComponent } from "./message.component";
-import { MessageStore } from "../../stores/message-store.service";
+import { byTestId, createComponentFactory } from '@ngneat/spectator/jest';
+import { MessageComponent } from './message.component';
+import { of } from 'rxjs';
+import { NotificationDescriptionFaker } from '../../__test_utils__/message-faker';
 
 describe('MessageComponent', () => {
   const createSUT = createComponentFactory({
     component: MessageComponent,
-    mocks: [MessageStore]
-  })
+    detectChanges: false,
+  });
 
   it('[UNIT][MSC-001]: Close Message', (done) => {
     // Arrange
     const sut = createSUT();
 
+    sut.setInput('message', NotificationDescriptionFaker.random());
+
     // Assert
-    // Act   
+    // Act
     sut.component.closed.subscribe(() => done());
     sut.click(byTestId('btnClose'));
-  })
+  });
 });

@@ -13,6 +13,8 @@ import { NotificationService, NotificationSubscription } from '../../shared/serv
 import { Channels } from '../../../messages/channels';
 import { ReportUploadedMessage } from '../../../messages/report-uploaded-message';
 import { TuiAlertService } from '@taiga-ui/core';
+import { NotificationDescriptionEnumeration } from '../../shared/enumerations/notification-description-enumeration';
+import { de } from '@faker-js/faker';
 
 @Component({
   selector: 'project.summary.page',
@@ -45,12 +47,14 @@ export class SummaryPageComponent implements OnInit, OnDestroy {
     });
 
     this.subscription = this.notificationService.subscribe<ReportUploadedMessage>(Channels.reportUploaded, async (message) => {
+      const description = NotificationDescriptionEnumeration.reportUploaded(message);
+
       this.alertService
-        .open(`New report was uploaded for ${message.project} project`, {
+        .open(description.message, {
           appearance: 'neutral',
           autoClose: 5000,
           closeable: true,
-          label: 'New Report',
+          label: description.title,
         })
         .subscribe();
 
@@ -65,11 +69,14 @@ export class SummaryPageComponent implements OnInit, OnDestroy {
   }
 
   private async refreshAsync(): Promise<void> {
+    console.log(this.project);
     this.summary.set(await this.projectService.getSummaryAsync(this.project));
     this.evolution.set(await this.projectService.getEvolutionAsync(this.project));
   }
 
-  private getAvatar(key: string) {
+  private getAvatar(key: string | undefined) {
+    if (!key) return '';
+
     const space = key.indexOf('_');
     let result = key.charAt(0);
     if (space > 0) result = `${result}${key.charAt(space + 1)}`;
