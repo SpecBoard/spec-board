@@ -2,6 +2,8 @@ import { byTestId, createHostFactory, mockProvider } from '@ngneat/spectator/jes
 import { PageComponent } from './page.component';
 import { LoadingService } from '../../services/loading.service';
 import { signal } from '@angular/core';
+import { ProjectService } from '../../../project/services/project.service';
+import { MessageStore } from '../../stores/message-store.service';
 
 describe('PageComponent', () => {
   const loading = signal(false);
@@ -13,6 +15,7 @@ describe('PageComponent', () => {
         loading: loading,
       }),
     ],
+    mocks: [ProjectService, MessageStore],
     detectChanges: false,
   });
 

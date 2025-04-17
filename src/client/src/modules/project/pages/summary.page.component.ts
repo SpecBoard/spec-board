@@ -17,6 +17,8 @@ import { PageComponent } from '../../shared/pages/page/page.component';
   styleUrl: './summary.page.component.scss',
 })
 export class SummaryPageComponent implements OnInit {
+  private project!: string;
+
   public readonly avatar: Signal<string> = computed(() => this.getAvatar(this.summary()?.key ?? ''));
   public readonly summary = signal<ProjectSummary | undefined>(undefined);
   public readonly evolution = signal<ProjectEvolution[] | undefined>(undefined);
@@ -26,14 +28,21 @@ export class SummaryPageComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(async (p) => {
       await this.loadingService.loadAsync(async () => {
-        const key = p['key'];
-        this.summary.set(await this.projectService.getSummaryAsync(key));
-        this.evolution.set(await this.projectService.getEvolutionAsync(key));
+        this.project = p['key'];
+        await this.refreshAsync();
       });
     });
   }
 
-  private getAvatar(key: string) {
+  private async refreshAsync(): Promise<void> {
+    console.log(this.project);
+    this.summary.set(await this.projectService.getSummaryAsync(this.project));
+    this.evolution.set(await this.projectService.getEvolutionAsync(this.project));
+  }
+
+  private getAvatar(key: string | undefined) {
+    if (!key) return '';
+
     const space = key.indexOf('_');
     let result = key.charAt(0);
     if (space > 0) result = `${result}${key.charAt(space + 1)}`;

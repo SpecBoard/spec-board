@@ -7,11 +7,12 @@ import { faker } from '@faker-js/faker';
 import { ProjectSummaryFaker } from '../__test_utils__/project-summary-faker';
 import { effect } from '@angular/core';
 import { ProjectEvolutionFaker } from '../__test_utils__/project-evolution-faker';
+import { NotificationService } from '../../shared/services/notification.service';
 
 describe('SummaryPageComponent', () => {
   const createCUT = createComponentFactory({
     component: SummaryPageComponent,
-    mocks: [ProjectService, ActivatedRoute],
+    mocks: [ProjectService, ActivatedRoute, NotificationService],
     detectChanges: false,
   });
 

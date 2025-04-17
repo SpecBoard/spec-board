@@ -1,4 +1,4 @@
-import { ApplicationConfig, ErrorHandler, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, ErrorHandler, inject, provideAppInitializer, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideEventPlugins } from '@taiga-ui/event-plugins';
@@ -19,6 +19,9 @@ import { LokiDriverOptions } from '../modules/logger/options/loki-driver-options
 
 import { provideConfiguration, provideOptions } from '@mihben/ngx-configuration';
 import { BackendOptions } from '../options/backendOptions';
+import { NotificationService } from '../modules/shared/services/notification.service';
+import { NotificationOptions } from '../modules/shared/options/notification-options';
+import { MessageStore } from '../modules/shared/stores/message-store.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -40,6 +43,8 @@ export const appConfig: ApplicationConfig = {
     ),
     provideOptions(BackendOptions, (builder) => builder.bind('backend').validateDecorators()),
 
+    provideOptions(NotificationOptions, (builder) => builder.bind('notification').validateDecorators()),
+
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     ProjectStore,
@@ -57,5 +62,10 @@ export const appConfig: ApplicationConfig = {
     provideHttpLogInterceptor(),
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
     { provide: TUI_ALERT_POSITION, useValue: 'auto auto 2rem auto' },
+
+    { provide: NotificationService, useClass: NotificationService },
+
+    { provide: MessageStore, useClass: MessageStore },
+    provideAppInitializer(async () => await inject(MessageStore).initializeAsync()),
   ],
 };

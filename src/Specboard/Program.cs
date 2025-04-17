@@ -1,5 +1,6 @@
 using LightInject;
 using Serilog;
+using Specboard.Hubs;
 using Specboard.Wireup;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,9 +22,10 @@ app.UseExceptionHandler();
 
 app.UseCors(builder =>
 {
-	builder.AllowAnyOrigin();
+	builder.WithOrigins("http://localhost:4200");
 	builder.AllowAnyHeader();
 	builder.AllowAnyMethod();
+	builder.AllowCredentials();
 });
 
 // Configure the HTTP request pipeline.
@@ -31,5 +33,6 @@ app.UseCors(builder =>
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<NotificationHub>("/notification");
 
 app.Run();

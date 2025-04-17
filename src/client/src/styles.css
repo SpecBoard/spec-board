@@ -9,6 +9,7 @@
   --skipped--pale: #ffc84522;
 
   --text: #010b13;
+  --text--pale: #010b1399;
   --text--invert: #fffafa;
 }
 
@@ -24,6 +25,10 @@ body {
   @apply w-full h-full;
 
   background: none;
+}
+
+.t-content {
+  height: 100% !important;
 }
 
 section {
@@ -59,6 +64,32 @@ input[type="checkbox"].fail[data-appearance="primary"] {
   font-size: 0.8rem;
 }
 
+.title--small {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
 .label {
   font-weight: 900;
+}
+
+div.divider {
+  border-left: 2px solid rgba(0, 0, 0, 0.2);
+  height: 100%;
+}
+
+.message__status {
+  font-weight: bold;
+}
+
+.message__status--pass {
+  color: var(--pass);
+}
+
+.message__status--fail {
+  color: var(--fail);
+}
+
+.message__status--skipped {
+  color: var(--skipped);
 }

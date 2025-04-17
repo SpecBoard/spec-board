@@ -1,11 +1,16 @@
 ﻿using LightInject;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using SpecBoard;
+using Specboard.Hubs;
+using SpecBoard.Application.Handlers;
+using SpecBoard.Application.Hubs;
 using SpecBoard.Application.Performers;
+using SpecStore;
 using STrain;
 using STrain.CQS.NetCore;
 using STrain.CQS.NetCore.Builders;
 using STrain.CQS.NetCore.LigtInject;
+using STrain.Eventing.RabbitMQ.NetCore.Extensions;
+using System.Text.Json.Serialization;
 
 namespace Specboard.Wireup
 {
@@ -13,7 +18,10 @@ namespace Specboard.Wireup
 	{
 		public static void ConfigureServices(this IServiceCollection services, IConfiguration configuration)
 		{
+			services.AddSignalR()
+				.AddJsonProtocol(options => options.PayloadSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
+			services.AddTransient<INotificationHub, NotificationService>();
 		}
 
 		public static void ConfigureContainer(this IServiceRegistry registry)
@@ -25,16 +33,16 @@ namespace Specboard.Wireup
 		{
 			builder.AddCQS(builder =>
 			{
-				builder.AddPerformer<IQueryPerformer<GetProjectsQuery, IEnumerable<GetProjectsQuery.Result>>, ProjectPerformers>();
-				builder.AddPerformer<IQueryPerformer<GetProjectSummaryQuery, GetProjectSummaryQuery.Result>, ProjectPerformers>();
-				builder.AddPerformer<IQueryPerformer<GetProjectEvolutionQuery, IEnumerable<GetProjectEvolutionQuery.Result>>, ProjectPerformers>();
+				builder.AddPerformer<IQueryPerformer<SpecBoard.GetProjectsQuery, IEnumerable<SpecBoard.GetProjectsQuery.Result>>, ProjectPerformers>();
+				builder.AddPerformer<IQueryPerformer<SpecBoard.GetProjectSummaryQuery, SpecBoard.GetProjectSummaryQuery.Result>, ProjectPerformers>();
+				builder.AddPerformer<IQueryPerformer<SpecBoard.GetProjectEvolutionQuery, IEnumerable<SpecBoard.GetProjectEvolutionQuery.Result>>, ProjectPerformers>();
 
 				builder.AddMvcRequestReceiver()
 					.UseLogger();
 				builder.AddGenericRequestHandler("api");
 
 				builder.AddRequestValidator()
-					.UseFluentRequestValidator(builder => builder.RegistrateFrom<GetProjectsQuery>());
+					.UseFluentRequestValidator(builder => builder.RegistrateFrom<SpecBoard.GetProjectsQuery>());
 
 				builder.AddRequestRouter(request => request.GetType().Namespace switch
 				{
@@ -46,6 +54,14 @@ namespace Specboard.Wireup
 			builder.Services.RemoveAll<IProblemDetailsWriter>();
 			builder.Services.AddExceptionHandler()
 				.UseDefaultWriters();
+
+			builder.AddEventing(builder =>
+			{
+				builder.AddHandler<ReportUploadedEvent, SpecStoreEventHandlers>();
+
+				builder.AddRabbitMQ((options, configuration) => configuration.Bind("RabbitMQ", options))
+					.AddConnection("receive").AddConsumer("RabbitMQ:Consumer");
+			});
 		}
 	}
 }

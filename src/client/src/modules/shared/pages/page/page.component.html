@@ -1,3 +1,5 @@
+@let messages = messageStore.messages$ | async;
+
 <loading-screen></loading-screen>
 @if (!this.loadingService.loading()) {
 <div class="app__container">
@@ -11,8 +13,33 @@
   </section>
   <ng-content></ng-content>
   <section class="app__footer">
-    <p>Projects: 4</p>
-    <p>Last Report: 2025-10-15 15:14</p>
+    <div class="footer__text">
+      @let projects = projectStore.Value$ | async; @if ((projects?.length ?? 0) > 0) {
+      <p><span class="label">Projects:</span> {{ projects!.length }}</p>
+      <div class="divider"></div>
+      <p><span class="label">Last Report:</span>{{ projects![0].key }} - {{ projects![0].lastReport | date : "short" }}</p>
+      }
+    </div>
+
+    <tui-badged-content [style.--tui-radius.%]="50">
+      <tui-badge-notification size="s" tuiSlot="top">{{ messages?.length }}</tui-badge-notification>
+      <tui-icon class="notification" icon="@tui.bell" (click)="notifications.set(!notifications())"></tui-icon>
+    </tui-badged-content>
   </section>
 </div>
+} @if (notifications()) {
+<tui-drawer>
+  <div class="notifications">
+    <div class="notifications__header">
+      <span class="title">Notifications</span>
+      <tui-icon class="notifications__close" (click)="notifications.set(false)" icon="@tui.x"></tui-icon>
+    </div>
+    <div tuiScrollbar class="notifications__content">
+      @for (message of messages; track message.timestamp) {
+      <app-message [message]="message" (closed)="close($event)"></app-message>
+      }
+    </div>
+    <button tuiButton appearance="outline" size="s" (click)="messageStore.clearAll()">Clear All</button>
+  </div>
+</tui-drawer>
 }
