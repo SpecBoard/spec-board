@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 import { HubConnectionState } from '@microsoft/signalr';
 import { NotificationDescriptionEnumeration } from '../enumerations/notification-description-enumeration';
 import { NotificationDescription } from '../models/notification-description';
+import { TuiAlertService } from '@taiga-ui/core';
 
 @Injectable({
   providedIn: 'root',
@@ -15,14 +16,26 @@ export class MessageStore {
 
   public messages$ = this.messages.asObservable();
 
-  constructor(private readonly notificationService: NotificationService) {}
+  constructor(private readonly notificationService: NotificationService, private readonly alertService: TuiAlertService) {}
 
   public async initializeAsync() {
     this.notificationService.state$.subscribe((state) => {
       if (state !== HubConnectionState.Connected) return;
 
       this.notificationService.subscribe<ReportUploadedMessage>(Channels.reportUploaded, (message) => {
-        this.messages.next([NotificationDescriptionEnumeration.reportUploaded(message), ...this.messages.value]);
+        const description = NotificationDescriptionEnumeration.reportUploaded(message);
+
+        this.alertService
+          .open(description.message, {
+            icon: description.icon,
+            label: description.title,
+            data: description.message,
+            appearance: 'neutral',
+            autoClose: 5000,
+            closeable: true,
+          })
+          .subscribe();
+        this.messages.next([description, ...this.messages.value]);
 
         return Promise.resolve(message);
       });

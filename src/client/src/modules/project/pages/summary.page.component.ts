@@ -1,4 +1,4 @@
-import { Component, computed, OnDestroy, OnInit, Signal, signal } from '@angular/core';
+import { Component, computed, OnInit, Signal, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectSummary } from '../models/project-summary';
 import { ProjectService } from '../services/project.service';
@@ -9,12 +9,7 @@ import { EvolutionComponent } from '../components/evolution/evolution.component'
 import { StatusBarComponent } from '../components/status-bar/status-bar.component';
 import { LoadingService } from '../../shared/services/loading.service';
 import { PageComponent } from '../../shared/pages/page/page.component';
-import { NotificationService, NotificationSubscription } from '../../shared/services/notification.service';
-import { Channels } from '../../../messages/channels';
-import { ReportUploadedMessage } from '../../../messages/report-uploaded-message';
 import { TuiAlertService } from '@taiga-ui/core';
-import { NotificationDescriptionEnumeration } from '../../shared/enumerations/notification-description-enumeration';
-import { de } from '@faker-js/faker';
 
 @Component({
   selector: 'project.summary.page',
@@ -22,21 +17,14 @@ import { de } from '@faker-js/faker';
   templateUrl: './summary.page.component.html',
   styleUrl: './summary.page.component.scss',
 })
-export class SummaryPageComponent implements OnInit, OnDestroy {
+export class SummaryPageComponent implements OnInit {
   private project!: string;
-  private subscription?: NotificationSubscription<ReportUploadedMessage>;
 
   public readonly avatar: Signal<string> = computed(() => this.getAvatar(this.summary()?.key ?? ''));
   public readonly summary = signal<ProjectSummary | undefined>(undefined);
   public readonly evolution = signal<ProjectEvolution[] | undefined>(undefined);
 
-  constructor(
-    private readonly route: ActivatedRoute,
-    private readonly projectService: ProjectService,
-    private readonly loadingService: LoadingService,
-    private readonly notificationService: NotificationService,
-    private readonly alertService: TuiAlertService
-  ) {}
+  constructor(private readonly route: ActivatedRoute, private readonly projectService: ProjectService, private readonly loadingService: LoadingService, private readonly alertService: TuiAlertService) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(async (p) => {
@@ -45,27 +33,6 @@ export class SummaryPageComponent implements OnInit, OnDestroy {
         await this.refreshAsync();
       });
     });
-
-    this.subscription = this.notificationService.subscribe<ReportUploadedMessage>(Channels.reportUploaded, async (message) => {
-      const description = NotificationDescriptionEnumeration.reportUploaded(message);
-
-      this.alertService
-        .open(description.message, {
-          appearance: 'neutral',
-          autoClose: 5000,
-          closeable: true,
-          label: description.title,
-        })
-        .subscribe();
-
-      if (message.project === this.project) await this.refreshAsync();
-
-      return message;
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
   }
 
   private async refreshAsync(): Promise<void> {

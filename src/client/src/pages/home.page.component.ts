@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ProjectStore } from '../stores/project.store.service';
 import { CommonModule } from '@angular/common';
 import { OverviewComponent } from '../modules/project/components/overview/overview.component';
@@ -7,11 +7,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoadingService } from '../modules/shared/services/loading.service';
 import { PageComponent } from '../modules/shared/pages/page/page.component';
 import { TuiAlertService, TuiButton } from '@taiga-ui/core';
-import { NotificationService, NotificationSubscription } from '../modules/shared/services/notification.service';
-import { ReportUploadedMessage } from '../messages/report-uploaded-message';
-import { Channels } from '../messages/channels';
-import { NotificationDescriptionEnumeration } from '../modules/shared/enumerations/notification-description-enumeration';
-import { de } from '@faker-js/faker';
 
 @Component({
   selector: 'app-home-page',
@@ -26,30 +21,6 @@ import { de } from '@faker-js/faker';
   ],
   styleUrls: ['./home.page.component.scss'],
 })
-export class HomePageComponent implements OnInit, OnDestroy {
-  private subscription?: NotificationSubscription<ReportUploadedMessage>;
-
-  constructor(public readonly projectStore: ProjectStore, public readonly loadingService: LoadingService, private readonly notificationService: NotificationService, public readonly alertService: TuiAlertService) {}
-
-  ngOnInit() {
-    this.subscription = this.notificationService.subscribe<ReportUploadedMessage>(Channels.reportUploaded, async (message) => {
-      const description = NotificationDescriptionEnumeration.reportUploaded(message);
-      this.alertService
-        .open(description.message, {
-          appearance: 'neutral',
-          autoClose: 5000,
-          closeable: true,
-          label: description.title,
-        })
-        .subscribe();
-
-      await this.projectStore.loadAsync();
-
-      return message;
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
-  }
+export class HomePageComponent {
+  constructor(public readonly projectStore: ProjectStore, public readonly loadingService: LoadingService, public readonly alertService: TuiAlertService) {}
 }
