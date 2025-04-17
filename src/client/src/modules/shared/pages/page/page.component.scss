@@ -48,7 +48,9 @@ section.app__footer {
 
 div.notifications {
   display: grid;
-  grid-template-rows: max-content 1fr;
+  grid-template-rows: max-content 1fr max-content;
+
+  height: 100%;
 
   row-gap: 1.4rem;
 }
@@ -60,9 +62,11 @@ div.notifications__header {
 
 div.notifications__content {
   display: grid;
-  grid-auto-rows: auto;
+  grid-auto-rows: max-content;
 
   row-gap: 0.4rem;
+
+  overflow: auto;
 }
 
 .notifications__close {

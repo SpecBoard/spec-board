@@ -15,7 +15,7 @@ namespace SpecBoard.Application.Handlers
 
 		public async Task HandleAsync(ReportUploadedEvent @event, CancellationToken cancellationToken)
 		{
-			await _hub.ReportUploadedAsync(@event.Project, @event.Version, cancellationToken);
+			await _hub.ReportUploadedAsync(@event.Project, @event.Version, @event.Status, cancellationToken);
 		}
 	}
 }

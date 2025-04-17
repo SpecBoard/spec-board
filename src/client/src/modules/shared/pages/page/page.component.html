@@ -1,3 +1,5 @@
+@let messages = messageStore.messages$ | async;
+
 <loading-screen></loading-screen>
 @if (!this.loadingService.loading()) {
 <div class="app__container">
@@ -20,7 +22,7 @@
     </div>
 
     <tui-badged-content [style.--tui-radius.%]="50">
-      <tui-badge-notification size="s" tuiSlot="top">3</tui-badge-notification>
+      <tui-badge-notification size="s" tuiSlot="top">{{ messages?.length }}</tui-badge-notification>
       <tui-icon class="notification" icon="@tui.bell" (click)="notifications.set(!notifications())"></tui-icon>
     </tui-badged-content>
   </section>
@@ -32,13 +34,12 @@
       <span class="title">Notifications</span>
       <tui-icon class="notifications__close" (click)="notifications.set(false)" icon="@tui.x"></tui-icon>
     </div>
-    <div class="notifications__content">
-      @let messages = messageStore.messages$ | async;
-
-      @for (message of messages; track message.date) {
-        <app-message [message]="message" (closed)="close($event)"></app-message>
+    <div tuiScrollbar class="notifications__content">
+      @for (message of messages; track message.timestamp) {
+      <app-message [message]="message" (closed)="close($event)"></app-message>
       }
     </div>
+    <button tuiButton appearance="outline" size="s" (click)="messageStore.clearAll()">Clear All</button>
   </div>
 </tui-drawer>
 }

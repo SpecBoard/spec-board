@@ -10,6 +10,8 @@ import { TuiAlertService, TuiButton } from '@taiga-ui/core';
 import { NotificationService, NotificationSubscription } from '../modules/shared/services/notification.service';
 import { ReportUploadedMessage } from '../messages/report-uploaded-message';
 import { Channels } from '../messages/channels';
+import { NotificationDescriptionEnumeration } from '../modules/shared/enumerations/notification-description-enumeration';
+import { de } from '@faker-js/faker';
 
 @Component({
   selector: 'app-home-page',
@@ -35,12 +37,13 @@ export class HomePageComponent implements OnInit, OnDestroy {
     });
 
     this.subscription = this.notificationService.subscribe<ReportUploadedMessage>(Channels.reportUploaded, async (message) => {
+      const description = NotificationDescriptionEnumeration.reportUploaded(message);
       this.alertService
-        .open(`New report was uploaded for ${message.project} project`, {
+        .open(description.message, {
           appearance: 'neutral',
           autoClose: 5000,
           closeable: true,
-          label: 'New Report',
+          label: description.title,
         })
         .subscribe();
 

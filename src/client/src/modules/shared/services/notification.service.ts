@@ -3,12 +3,16 @@ import * as SignalR from '@microsoft/signalr';
 import { NotificationOptions } from '../options/notification-options';
 import { LoggerService } from '../../logger/logger.service';
 import { sourceContext } from '../../logger/enrichers/source-context-enricher';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class NotificationService {
   private connection?: SignalR.HubConnection;
+  private readonly state = new BehaviorSubject<SignalR.HubConnectionState>(SignalR.HubConnectionState.Disconnected);
+
+  public state$ = this.state.asObservable();
 
   constructor(private readonly options: NotificationOptions, private readonly logger: LoggerService) {}
 
@@ -19,6 +23,8 @@ export class NotificationService {
 
     this.connection = new SignalR.HubConnectionBuilder().withUrl(this.options.url).build();
     await this.connection.start();
+
+    this.state.next(SignalR.HubConnectionState.Connected);
 
     sourceContext(NotificationOptions, () => this.logger.debug('SignalR connection has been established'));
   }

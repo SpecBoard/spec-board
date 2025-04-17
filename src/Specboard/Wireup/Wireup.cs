@@ -10,6 +10,7 @@ using STrain.CQS.NetCore;
 using STrain.CQS.NetCore.Builders;
 using STrain.CQS.NetCore.LigtInject;
 using STrain.Eventing.RabbitMQ.NetCore.Extensions;
+using System.Text.Json.Serialization;
 
 namespace Specboard.Wireup
 {
@@ -17,7 +18,8 @@ namespace Specboard.Wireup
 	{
 		public static void ConfigureServices(this IServiceCollection services, IConfiguration configuration)
 		{
-			services.AddSignalR();
+			services.AddSignalR()
+				.AddJsonProtocol(options => options.PayloadSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
 			services.AddTransient<INotificationHub, NotificationService>();
 		}

@@ -1,4 +1,4 @@
-import { ApplicationConfig, ErrorHandler, inject, provideAppInitializer, provideZoneChangeDetection } from '@angular/core';
+import { APP_INITIALIZER, ApplicationConfig, ErrorHandler, inject, provideAppInitializer, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideEventPlugins } from '@taiga-ui/event-plugins';
@@ -21,6 +21,7 @@ import { provideConfiguration, provideOptions } from '@mihben/ngx-configuration'
 import { BackendOptions } from '../options/backendOptions';
 import { NotificationService } from '../modules/shared/services/notification.service';
 import { NotificationOptions } from '../modules/shared/options/notification-options';
+import { MessageStore } from '../modules/shared/stores/message-store.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -63,5 +64,8 @@ export const appConfig: ApplicationConfig = {
     { provide: TUI_ALERT_POSITION, useValue: 'auto auto 2rem auto' },
 
     { provide: NotificationService, useClass: NotificationService },
+
+    { provide: MessageStore, useClass: MessageStore },
+    provideAppInitializer(async () => await inject(MessageStore).initializeAsync()),
   ],
 };

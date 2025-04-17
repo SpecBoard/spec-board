@@ -3,31 +3,40 @@ import { NotificationService } from '../services/notification.service';
 import { Channels } from '../../../messages/channels';
 import { ReportUploadedMessage } from '../../../messages/report-uploaded-message';
 import { BehaviorSubject } from 'rxjs';
-import { Message } from '../models/message';
+import { HubConnectionState } from '@microsoft/signalr';
+import { NotificationDescriptionEnumeration } from '../enumerations/notification-description-enumeration';
+import { NotificationDescription } from '../models/notification-description';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MessageStore {
-  private messages = new BehaviorSubject<Message[]>([{
-    title: 'New Report Uploaded',
-    message: `New report was uploaded to spec-store project`,
-    timestamp: Date.now()
-  }]);
+  private readonly messages = new BehaviorSubject<NotificationDescription[]>([]);
 
   public messages$ = this.messages.asObservable();
 
-  constructor(private readonly notificationService: NotificationService) { }
+  constructor(private readonly notificationService: NotificationService) {}
 
   public async initializeAsync() {
-    this.notificationService.subscribe<ReportUploadedMessage>(Channels.reportUploaded, (message) => {
-      this.messages.next([{ title: 'New Report Uploaded', message: `New report was uploaded for ${message.project}`, timestamp: Date.now() }])
+    this.notificationService.state$.subscribe((state) => {
+      if (state !== HubConnectionState.Connected) return;
 
-      return Promise.resolve(message);
+      this.notificationService.subscribe<ReportUploadedMessage>(Channels.reportUploaded, (message) => {
+        this.messages.next([NotificationDescriptionEnumeration.reportUploaded(message), ...this.messages.value]);
+
+        return Promise.resolve(message);
+      });
     });
   }
 
-  public clear(message: Message) {
-    this.messages.next(this.messages.value.splice(this.messages.value.indexOf(message), 1));
+  public clear(message: NotificationDescription) {
+    const messages = this.messages.value;
+
+    messages.splice(messages.indexOf(message), 1);
+    this.messages.next(messages);
+  }
+
+  public clearAll() {
+    this.messages.next([]);
   }
 }
