@@ -60,4 +60,19 @@ describe('ProjectService', () => {
     // Assert
     expect(result).toEqual(evolution);
   });
+
+  it('[UNIT][PRS-004]: Update project', async () => {
+    // Arrange
+    const sut = createSUT();
+    const key = faker.string.sample();
+    const name = faker.string.sample();
+
+    sut.httpClient.patch = jest.fn(() => of(undefined)) as never;
+
+    // Act
+    await sut.service.updateAsync(key, name);
+
+    // Assert
+    expect(jest.spyOn(sut.httpClient, 'patch')).toHaveBeenCalledWith(`${options.baseAddress}api/project/${key}`, { name: name });
+  });
 });

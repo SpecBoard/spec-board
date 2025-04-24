@@ -22,9 +22,11 @@ export class OverviewComponent {
   public set project(value: ProjectOverview) {
     this._project = value;
     this.avatar.set(this.getAvatar(this._project.key));
+    this.title.set(this.getTitle());
   }
 
   public avatar = signal<string | undefined>(undefined);
+  public title = signal<string | undefined>(undefined);
 
   constructor(private readonly navigator: NavigatorService) {}
 
@@ -38,6 +40,11 @@ export class OverviewComponent {
 
   public open() {
     this.navigator.toProjectSummary(this.project.key);
+  }
+
+  private getTitle() {
+    if (this._project.name && this._project.name !== '') return this._project.name;
+    return this._project.key;
   }
 
   public Icons = Icons;

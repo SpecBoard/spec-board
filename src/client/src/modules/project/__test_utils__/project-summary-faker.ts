@@ -6,6 +6,7 @@ export class ProjectSummaryFaker {
   public static random(): ProjectSummary {
     return {
       key: faker.string.alpha(),
+      name: faker.string.sample(),
       version: faker.system.semver(),
       lastReport: faker.date.recent(),
       pass: faker.number.int(),
@@ -45,6 +46,13 @@ export class ProjectSummaryFaker {
     const result = this.random();
     result.skipped = faker.number.int({ min: 1 });
     result.fail = 0;
+
+    return result;
+  }
+
+  public static withoutName(): ProjectSummary {
+    const result = this.random();
+    result.name = undefined;
 
     return result;
   }

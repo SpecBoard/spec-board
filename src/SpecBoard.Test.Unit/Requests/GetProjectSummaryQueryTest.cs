@@ -1,7 +1,7 @@
 ﻿using AutoBogus;
 using Moq;
 
-namespace SpecBoard.Test.Unit.Queries
+namespace SpecBoard.Test.Unit.Requests
 {
 	public partial class ProjectPerformersTest
 	{
@@ -21,6 +21,7 @@ namespace SpecBoard.Test.Unit.Queries
 
 			// Assert
 			Assert.Equal(summary.Key, result.Key);
+			Assert.Equal(summary.Name, result.Name);
 			Assert.Equal(summary.Version, result.Version);
 			Assert.Equal(summary.LastReport, result.LastReport);
 			Assert.Equal(summary.Pass, result.Pass);
