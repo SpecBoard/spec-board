@@ -25,6 +25,7 @@ export class SummaryPageComponent implements OnInit {
   public settings = signal<boolean>(false);
 
   public readonly avatar: Signal<string> = computed(() => this.getAvatar(this.summary()?.key ?? ''));
+  public readonly title: Signal<string | undefined> = computed(() => this.getTitle());
   public readonly summary = signal<ProjectSummary | undefined>(undefined);
   public readonly evolution = signal<ProjectEvolution[] | undefined>(undefined);
 
@@ -54,7 +55,7 @@ export class SummaryPageComponent implements OnInit {
     return result.toUpperCase();
   }
 
-  public getTitle() {
+  private getTitle() {
     if (!this.summary()?.name || this.summary()?.name === '') return this.summary()?.key;
 
     return this.summary()?.name;

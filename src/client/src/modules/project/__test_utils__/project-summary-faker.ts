@@ -49,4 +49,11 @@ export class ProjectSummaryFaker {
 
     return result;
   }
+
+  public static withoutName(): ProjectSummary {
+    const result = this.random();
+    result.name = undefined;
+
+    return result;
+  }
 }

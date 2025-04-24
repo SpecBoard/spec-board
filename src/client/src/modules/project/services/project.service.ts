@@ -22,18 +22,14 @@ export class ProjectService {
   }
 
   public async getSummaryAsync(key: string): Promise<ProjectSummary> {
-    const result = await lastValueFrom<ProjectSummary>(this.client.get<ProjectSummary>(`${this.options.baseAddress}api/project/${key}/summary`));
-
-    return result;
+    return await lastValueFrom<ProjectSummary>(this.client.get<ProjectSummary>(`${this.options.baseAddress}api/project/${key}/summary`));
   }
 
   public async getEvolutionAsync(key: string): Promise<ProjectEvolution[]> {
-    const result = await lastValueFrom<ProjectEvolution[]>(this.client.get<ProjectEvolution[]>(`${this.options.baseAddress}api/project/${key}/evolution`));
-
-    return result;
+    return await lastValueFrom<ProjectEvolution[]>(this.client.get<ProjectEvolution[]>(`${this.options.baseAddress}api/project/${key}/evolution`));
   }
 
-  public async updateAsync(key: string, name: string) {
+  public async updateAsync(key: string, name?: string) {
     await lastValueFrom(this.client.patch(`${this.options.baseAddress}api/project/${key}`, { name: name }));
   }
 }

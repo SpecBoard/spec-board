@@ -3,7 +3,7 @@
     <div class="header">
       <div class="avatar">{{ avatar() }}</div>
       <div class="information">
-        <span data-testid="spnTitle" class="title">{{ getTitle() }}</span>
+        <span data-testid="spnTitle" class="title">{{ title() }}</span>
         <div class="detail">
           <div class="value">
             <span class="label">Version:</span>
@@ -15,7 +15,9 @@
           </div>
         </div>
       </div>
-      <tui-icon class="settings" icon="@tui.settings" (click)="settings.set(true)"></tui-icon>
+      <div data-testid="btnSettings" (click)="settings.set(true)">
+        <tui-icon class="settings" icon="@tui.settings"></tui-icon>
+      </div>
     </div>
 
     @if (summary()) {
@@ -34,7 +36,7 @@
 
 @if (settings()) {
 <tui-drawer>
-  <div class="project-editor__content">
+  <div data-testid="divSettings" class="project-editor__content">
     <span class="title project-editor__title">{{ getTitle() }}</span>
     <div class="project-editor__form">
       <div class="field">
@@ -43,7 +45,7 @@
       </div>
       <tui-textfield>
         <label tuiLabel>Name</label>
-        <input tuiTextfield [(ngModel)]="summary()!.name" />
+        <input data-testid="inpName" tuiTextfield [(ngModel)]="summary()!.name" />
       </tui-textfield>
     </div>
     <div class="project-editor__buttons">
