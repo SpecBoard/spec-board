@@ -12,6 +12,7 @@ import { PageComponent } from '../../shared/pages/page/page.component';
 import { TuiButton, TuiIcon, TuiLabel, TuiTextfield } from '@taiga-ui/core';
 import { TuiDrawer } from '@taiga-ui/kit';
 import { FormsModule } from '@angular/forms';
+import { ProjectStore } from '../../../stores/project.store.service';
 
 @Component({
   selector: 'project.summary.page',
@@ -29,7 +30,7 @@ export class SummaryPageComponent implements OnInit {
   public readonly summary = signal<ProjectSummary | undefined>(undefined);
   public readonly evolution = signal<ProjectEvolution[] | undefined>(undefined);
 
-  constructor(private readonly route: ActivatedRoute, private readonly projectService: ProjectService, private readonly loadingService: LoadingService) {}
+  constructor(private readonly route: ActivatedRoute, private readonly projectService: ProjectService, private readonly projectStore: ProjectStore, private readonly loadingService: LoadingService) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(async (p) => {
@@ -64,6 +65,8 @@ export class SummaryPageComponent implements OnInit {
   public save() {
     void this.loadingService.loadAsync(async () => {
       await this.projectService.updateAsync(this.summary()!.key, this.summary()!.name);
+      await this.refreshAsync();
+      await this.projectStore.loadAsync();
     });
   }
 }
