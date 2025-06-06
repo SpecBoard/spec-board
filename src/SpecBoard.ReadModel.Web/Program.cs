@@ -1,14 +1,18 @@
 using Serilog;
+using SpecBoard.ReadModel.Web.Wireups;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Host.UseLightInject();
 builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
 
 builder.Services.AddControllers();
 
-
+builder.AddDependencies();
+builder.AddCQS();
+builder.AddEventing();
 
 var app = builder.Build();
 
