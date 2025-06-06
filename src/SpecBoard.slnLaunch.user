@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "Default",
+    "Projects": [
+      {
+        "Path": "SpecBoard.ReadModel.Web\\SpecBoard.ReadModel.Web.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "SpecBoard.Web\\SpecBoard.Web.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
