@@ -78,6 +78,7 @@
     }
   },
   "schematics": {
+    "root": "",
     "@schematics/angular:component": {
       "type": "component"
     },
