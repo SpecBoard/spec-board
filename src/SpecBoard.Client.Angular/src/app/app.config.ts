@@ -1,0 +1,61 @@
+import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { provideRouter } from '@angular/router';
+
+import {
+  defaultConfiguration,
+  provideConfiguration,
+  provideOptions,
+} from '@mihben/ngx-configuration';
+
+import { routes } from './app.routes';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
+import {
+  provideBrowserLogEnricher,
+  provideConsoleDriver,
+  provideLogger,
+  provideLokiDriver,
+  provideSourceContextLogEnricher,
+} from '../modules/logger/providers';
+import { LoggerOptions } from '../modules/logger/options/logger-options';
+import { LokiDriverOptions } from '../modules/logger/options/loki-driver-options';
+import { ConsoleDriverOptions } from '../modules/logger/options/console-driver-options';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideRouter(routes),
+
+    provideHttpClient(withInterceptorsFromDi()),
+
+    provideConfiguration((builder) =>
+      defaultConfiguration(builder, 'Development')
+    ),
+
+    provideOptions(LoggerOptions, (builder) =>
+      builder.bind('logging').validateDecorators()
+    ),
+    provideOptions(LokiDriverOptions, (builder) =>
+      builder
+        .bind('logging:loki')
+        .validateDecorators()
+        .configure((options, configuration) => {
+          options.labels = {
+            Application: configuration.get('logging:loki:labels:Application'),
+            Service: configuration.get('logging:loki:labels:Service'),
+            Environment: configuration.get('logging:loki:labels:Environment'),
+          };
+        })
+    ),
+    provideOptions(ConsoleDriverOptions, (builder) =>
+      builder.bind('logging:console').validateDecorators()
+    ),
+    provideLogger(),
+    provideSourceContextLogEnricher(),
+    provideBrowserLogEnricher(),
+    provideLokiDriver(),
+    provideConsoleDriver(),
+  ],
+};
