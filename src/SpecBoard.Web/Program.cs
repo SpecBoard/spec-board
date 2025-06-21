@@ -1,4 +1,5 @@
 using Serilog;
+using SpecBoard.Web.Middlewares;
 using SpecBoard.Web.Wireup;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +19,8 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 
 app.UseAuthorization();
+
+app.UseMiddleware<UserContextMiddleware>();
 
 app.MapControllers();
 

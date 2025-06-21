@@ -1,4 +1,6 @@
-﻿using STrain.CQS.NetCore;
+﻿using SpecBoard.Application.Contexts;
+using SpecBoard.Web.Middlewares;
+using STrain.CQS.NetCore;
 using STrain.CQS.NetCore.Builders;
 using STrain.CQS.NetCore.LigtInject;
 
@@ -8,6 +10,9 @@ namespace SpecBoard.Web.Wireup
 	{
 		public static void AddDependencies(this WebApplicationBuilder builder)
 		{
+			builder.Services.AddScoped<UserContext>();
+			builder.Services.AddTransient<IUserContext>(provider => provider.GetRequiredService<UserContext>());
+			builder.Services.AddTransient<IUserAccessor>(provider => provider.GetRequiredService<UserContext>());
 		}
 
 		public static void AddCQS(this WebApplicationBuilder builder)

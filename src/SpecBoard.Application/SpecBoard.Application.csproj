@@ -6,4 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="SpecProfile.Api" Version="1.0.0-beta.2" />
+    <PackageReference Include="STrain.CQS" Version="3.1.0-rc.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SpecBoard.Api\SpecBoard.Api.csproj" />
+  </ItemGroup>
+
 </Project>
