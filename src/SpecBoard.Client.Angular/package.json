@@ -19,9 +19,11 @@
     "@angular/platform-browser-dynamic": "^20.0.2",
     "@angular/router": "^20.0.2",
     "@mihben/ngx-configuration": "^1.0.0-rc.6",
+    "@tailwindcss/postcss": "^4.1.10",
     "@types/jest": "^29.5.14",
     "reflect-metadata": "^0.2.2",
     "rxjs": "~7.8.0",
+    "tailwindcss": "^4.1.10",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.1"
   },
