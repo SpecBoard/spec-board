@@ -22,11 +22,21 @@ import {
 import { LoggerOptions } from '../modules/logger/options/logger-options';
 import { LokiDriverOptions } from '../modules/logger/options/loki-driver-options';
 import { ConsoleDriverOptions } from '../modules/logger/options/console-driver-options';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { providePrimeNG } from 'primeng/config';
+import { Light as LightTheme } from './presets';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
+
+    provideAnimationsAsync(),
+    providePrimeNG({
+      theme: {
+        preset: LightTheme,
+      },
+    }),
 
     provideHttpClient(withInterceptorsFromDi()),
 

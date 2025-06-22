@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
-.test {
-  @apply;
+html,
+body,
+div {
+  @apply h-full;
 }
