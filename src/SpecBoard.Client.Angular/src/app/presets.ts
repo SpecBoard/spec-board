@@ -1,4 +1,4 @@
 import { definePreset } from '@primeng/themes';
-import Aura from '@primeng/themes/aura';
+import Theme from '@primeng/themes/nora';
 
-export const Light = definePreset(Aura, {});
+export const Light = definePreset(Theme);

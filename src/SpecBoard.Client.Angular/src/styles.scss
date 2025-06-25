@@ -5,3 +5,8 @@ body,
 div {
   @apply h-full;
 }
+
+@theme {
+  --color-primary: #4f46e5;
+  --color-secondary: #f59e0b;
+}
