@@ -20,4 +20,17 @@ describe('NavigationService', () => {
     // Assert
     expect(spy).toHaveBeenCalledWith(['login']);
   });
+
+  it('[UNIT][RTN-003]: Navigate back', () => {
+    // Arrange
+    const sut = createSUT();
+
+    const spy = jest.spyOn(sut.inject(Router), 'navigate');
+
+    // Act
+    sut.service.back();
+
+    // Assert
+    expect(spy).toHaveBeenCalledWith(['..']);
+  });
 });

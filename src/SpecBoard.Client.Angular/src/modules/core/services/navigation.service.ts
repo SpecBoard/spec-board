@@ -7,6 +7,10 @@ import { Router } from '@angular/router';
 export class NavigationService {
   constructor(private readonly router: Router) {}
 
+  back(): void {
+    this.router.navigate(['..']);
+  }
+
   toLogIn(): void {
     this.router.navigate(['login']);
   }

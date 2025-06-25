@@ -2,34 +2,18 @@ import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideOAuthClient } from 'angular-oauth2-oidc';
 
-import {
-  defaultConfiguration,
-  provideConfiguration,
-  provideOptions,
-} from '@mihben/ngx-configuration';
+import { defaultConfiguration, provideConfiguration, provideOptions } from '@mihben/ngx-configuration';
 
 import { routes } from './app.routes';
-import {
-  provideHttpClient,
-  withInterceptorsFromDi,
-} from '@angular/common/http';
-import {
-  provideBrowserLogEnricher,
-  provideConsoleDriver,
-  provideLogger,
-  provideLokiDriver,
-  provideSourceContextLogEnricher,
-} from '../modules/logger/providers';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideBrowserLogEnricher, provideConsoleDriver, provideLogger, provideLokiDriver, provideSourceContextLogEnricher } from '../modules/logger/providers';
 import { LoggerOptions } from '../modules/logger/options/logger-options';
 import { LokiDriverOptions } from '../modules/logger/options/loki-driver-options';
 import { ConsoleDriverOptions } from '../modules/logger/options/console-driver-options';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
 import { Light as LightTheme } from './presets';
-import {
-  GithubOptions,
-  MicrosoftOptions,
-} from '../modules/core/options/auth-options';
+import { GithubOptions } from '../modules/core/options/auth-options';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -45,13 +29,9 @@ export const appConfig: ApplicationConfig = {
 
     provideHttpClient(withInterceptorsFromDi()),
 
-    provideConfiguration((builder) =>
-      defaultConfiguration(builder, 'Development')
-    ),
+    provideConfiguration((builder) => defaultConfiguration(builder, 'Development')),
 
-    provideOptions(LoggerOptions, (builder) =>
-      builder.bind('logging').validateDecorators()
-    ),
+    provideOptions(LoggerOptions, (builder) => builder.bind('logging').validateDecorators()),
     provideOptions(LokiDriverOptions, (builder) =>
       builder
         .bind('logging:loki')
@@ -64,9 +44,7 @@ export const appConfig: ApplicationConfig = {
           };
         })
     ),
-    provideOptions(ConsoleDriverOptions, (builder) =>
-      builder.bind('logging:console').validateDecorators()
-    ),
+    provideOptions(ConsoleDriverOptions, (builder) => builder.bind('logging:console').validateDecorators()),
     provideLogger(),
     provideSourceContextLogEnricher(),
     provideBrowserLogEnricher(),
@@ -74,8 +52,6 @@ export const appConfig: ApplicationConfig = {
     provideConsoleDriver(),
 
     provideOAuthClient(),
-    provideOptions(GithubOptions, (builder) =>
-      builder.bind('authorization:github').validateDecorators()
-    ),
+    provideOptions(GithubOptions, (builder) => builder.bind('authorization:github').validateDecorators()),
   ],
 };
