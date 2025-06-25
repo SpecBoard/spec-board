@@ -1,5 +1,6 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
+import { provideOAuthClient } from 'angular-oauth2-oidc';
 
 import {
   defaultConfiguration,
@@ -25,6 +26,10 @@ import { ConsoleDriverOptions } from '../modules/logger/options/console-driver-o
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
 import { Light as LightTheme } from './presets';
+import {
+  GithubOptions,
+  MicrosoftOptions,
+} from '../modules/core/options/auth-options';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -67,5 +72,10 @@ export const appConfig: ApplicationConfig = {
     provideBrowserLogEnricher(),
     provideLokiDriver(),
     provideConsoleDriver(),
+
+    provideOAuthClient(),
+    provideOptions(GithubOptions, (builder) =>
+      builder.bind('authorization:github').validateDecorators()
+    ),
   ],
 };
