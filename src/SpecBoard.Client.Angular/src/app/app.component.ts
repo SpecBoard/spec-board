@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { LoggerService } from '../modules/logger/logger.service';
 import { ButtonModule } from 'primeng/button';
 import { RouterOutlet } from '@angular/router';
+import { NavigationService } from '../modules/core/services/navigation.service';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,14 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  constructor(private readonly logger: LoggerService) {
+  constructor(
+    private readonly navigationService: NavigationService,
+    private readonly logger: LoggerService
+  ) {
     this.logger.information('Applicaton is starting up...');
+  }
+
+  public onLogIn(): void {
+    this.navigationService.toLogIn();
   }
 }

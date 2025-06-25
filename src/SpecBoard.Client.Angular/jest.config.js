@@ -1,11 +1,11 @@
-const { createDefaultPreset } = require("ts-jest");
-
-const tsJestTransformCfg = createDefaultPreset().transform;
-
-/** @type {import("jest").Config} **/
 module.exports = {
-  testEnvironment: "node",
+  preset: "jest-preset-angular",
+  setupFilesAfterEnv: ["<rootDir>/setup-jest.ts"],
+  testPathIgnorePatterns: ["<rootDir>/node_modules/", "<rootDir>/dist/"],
   transform: {
-    ...tsJestTransformCfg,
+    "^.+\\.ts$": "ts-jest", // Only transform .ts files
   },
+  transformIgnorePatterns: [
+    "/node_modules/(?!flat)/", // Exclude modules except 'flat' from transformation
+  ],
 };
