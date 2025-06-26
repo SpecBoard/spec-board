@@ -1,3 +1,27 @@
-﻿@inherits LayoutComponentBase
+﻿@using SpecBoard.Client.Blazor.Services
+@inherits LayoutComponentBase
 
-@Body
+@inject INavigator Navigator;
+
+<div class="layout__container">
+	<div class="layout__header">
+		<span @onclick="ToHome">BANNER</span>
+		<button @onclick="LogIn">LogIn</button>
+	</div>
+
+	<div class="layout__content">
+		@Body
+	</div>
+</div>
+
+@code {
+	private void ToHome()
+	{
+		Navigator.ToHome();
+	}
+
+	private void LogIn()
+	{
+		Navigator.ToLogin();
+	}
+}

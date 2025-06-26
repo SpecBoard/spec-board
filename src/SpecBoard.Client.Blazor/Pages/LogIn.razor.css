@@ -1,0 +1,29 @@
+﻿div.login__container {
+    display: grid;
+    grid-template-rows: auto auto;
+    row-gap: var(--space--xl);
+
+    height: 100%;
+
+    align-content: center;
+    justify-items: center;
+}
+
+div.login__button_container {
+    display: grid;
+    grid-template-columns: min-content max-content;
+    column-gap: var(--space--s);
+
+    justify-content: center;
+    align-items: center;
+}
+
+span.login__title {
+    font-size: var(--size__text--xxl);
+}
+
+button.login__button {
+    width: 33%;
+
+    padding: var(--space);
+}
