@@ -9,6 +9,10 @@
       {
         "Path": "SpecBoard.Web\\SpecBoard.Web.csproj",
         "Action": "Start"
+      },
+      {
+        "Path": "SpecBoard.Client.Blazor\\SpecBoard.Client.Blazor.csproj",
+        "Action": "Start"
       }
     ]
   }

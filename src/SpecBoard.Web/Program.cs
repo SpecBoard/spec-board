@@ -10,6 +10,8 @@ builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Confi
 
 builder.Services.AddControllers();
 
+builder.Services.AddScoped<UserContextMiddleware>();
+
 builder.AddDependencies();
 builder.AddCQS();
 builder.AddDependencies();
